@@ -5,7 +5,7 @@
 * Murtaza Manasawala
 * Sricheta Ruj
 * Rohan Acharya
-* Drashti Thakkar
+* Drusti Thakkar
 
 
 ## Project Modules
@@ -33,3 +33,4 @@
 
 ### Architecture Diagram
 
+* [Link to Architecture Diagram] (https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_BurgerOrderSytem.png)
