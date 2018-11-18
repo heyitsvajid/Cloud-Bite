@@ -76,9 +76,22 @@
     
 </br>
 
+####    POST /cart
+    Add items from cart selected by user
+    POST /tenant/user/item_name HTTP/1.1
+    Accept: application/json
+    
+    Body: {"tenant_id": 123, "user_id": 456, "items": [{name, amount, description, image_url, count}]}
+    
+    Response:
+    - 201 Created
+    - 400 Invalid Request
+
+</br>
+
 ####    DELETE /cart
     Remove all items from cart after placing order
-    DELETE /tenant/user/cart HTTP/1.1
+    DELETE /tenant/user/item_name HTTP/1.1
     Accept: application/json
     
     Body: {"tenant_id": 123, "user_id": 456, "items": [{name, amount, description, image_url, count}]}
