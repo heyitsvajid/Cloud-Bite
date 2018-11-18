@@ -17,14 +17,14 @@ import (
 // MongoDB Config
 var mongodb_server = "mongodb"
 var mongodb_database = "cmpe281"
-var mongodb_collection = "gumball"
+var mongodb_collection = "burgerCounter"
 
 // RabbitMQ Config
-var rabbitmq_server = "rabbitmq"
-var rabbitmq_port = "5672"
-var rabbitmq_queue = "gumball"
-var rabbitmq_user = "guest"
-var rabbitmq_pass = "guest"
+// var rabbitmq_server = "rabbitmq"
+// var rabbitmq_port = "5672"
+// var rabbitmq_queue = "gumball"
+// var rabbitmq_user = "guest"
+// var rabbitmq_pass = "guest"
 
 // NewServer configures and returns a Server.
 func NewServer() *negroni.Negroni {
@@ -46,9 +46,9 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 
 func getBurgerCountersHandler(err error, msg string){
 	return func(w http.ResponseWriter, req *http.Request) {
-    	var m gumballMachine
+    	var m counter
     	_ = json.NewDecoder(req.Body).Decode(&m)		
-    	fmt.Println("Update Gumball Inventory To: ", m.CountGumballs)
+    	fmt.Println("Getting Burger Counters on the basis of Zip Code")
 		session, err := mgo.Dial(mongodb_server)
         if err != nil {
                 panic(err)
