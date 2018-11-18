@@ -10,9 +10,9 @@
 
 ## Project Modules
 
-- Database
-- Frontend
-- Backend
+- [Database] (https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Backend/DB%20Schema.md)
+- [Frontend]
+- [Backend] (https://github.com/nguyensjsu/fa18-281-avengers/tree/master/Backend)
 - Infrastructure
 
 
