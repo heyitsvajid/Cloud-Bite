@@ -1,7 +1,7 @@
 # CMPE 281 Avengers Team Project
 
 ## Team Members:
-* Vajid Kagdi
+* [Vajid Kagdi](https://github.com/heyitsvajid)
 * Murtaza Manasawala
 * Sricheta Ruj
 * Rohan Acharya
@@ -26,10 +26,10 @@
 
 ## Agile Core Values
 
-- Eliminate Waste
+- [Eliminate Waste](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Scrum%20Values/XP_Value_Eliminating_Waste.md)
 - Feedback
 - Simplicity
-- Communication
+- [Communication](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Scrum%20Values/XP_Value_Communication.md)
 
 ### Architecture Diagram
 
