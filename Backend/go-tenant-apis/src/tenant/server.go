@@ -8,11 +8,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"encoding/json"
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
 	"github.com/unrolled/render"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"github.com/satori/go.uuid"
 )
 
 // MongoDB Config
@@ -73,7 +75,7 @@ func tenantHandler(formatter *render.Render) http.HandlerFunc {
 			formatter.JSON(w, http.StatusBadRequest, "Tenant ID Missing")
 		} else {
 			c := session.DB(mongodb_database).C(mongodb_collection)
-			err = c.Find(bson.M{"_id": id}).One(&result)
+			err = c.Find(bson.M{"id":id}).One(&result)
 			if err != nil {
 			fmt.Println(" Tenant: ", err)
 			formatter.JSON(w, http.StatusBadRequest, "Not Found")
@@ -97,7 +99,7 @@ func tenantAllHandler(formatter *render.Render) http.HandlerFunc {
 		c := session.DB(mongodb_database).C(mongodb_collection)
 		err = c.Find(bson.M{}).One(&result)
 		if err != nil {
-			fmt.Println(" Tenant: ", err)
+			fmt.Println(" Error: ", err)
 			formatter.JSON(w, http.StatusBadRequest, "Not Found")
 		}
 		fmt.Println("All Tenants:", result)
@@ -117,7 +119,30 @@ func tenantUpdateHandler(formatter *render.Render) http.HandlerFunc {
 // API Create Tenant
 func tenantNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		fmt.Fprintln(w, "not implemented yet !")
+	session, err := mgo.Dial(mongodb_server)
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+	session.SetMode(mgo.Monotonic, true)
+
+	var tenant Tenant
+	if err := json.NewDecoder(req.Body).Decode(&tenant); err != nil {
+		fmt.Println(" Error: ", err)
+		formatter.JSON(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	uuid,_ := uuid.NewV4()
+	tenant.ID = uuid.String()
+	c := session.DB(mongodb_database).C(mongodb_collection)
+
+	if err := c.Insert(&tenant); err != nil {
+		fmt.Println(" Error: ", err)
+		formatter.JSON(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	formatter.JSON(w, http.StatusCreated, tenant)
+
 	}
 }
 

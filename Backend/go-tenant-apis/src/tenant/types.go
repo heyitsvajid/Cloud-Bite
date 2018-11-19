@@ -1,21 +1,22 @@
 /*
-	Gumball API in Go (Version 3)
-	Uses MongoDB and RabbitMQ 
-	(For use with Kong API Key)
+	Tenant API in Go (Version 3)
+	Uses MongoDB
 */
 	
 package main
 
-type gumballMachine struct {
-	Id             	int 	
-	CountGumballs   int    	
-	ModelNumber 	string	    
-	SerialNumber 	string	
+
+type Products struct {
+    Name string `json:"name"`              
+    Amount string `json:"amount"` 
+    Description string `json:"description"`
+    Image string `json:"image"`
 }
 
-type order struct {
-	Id             	string 	
-	OrderStatus 	string	
-}
 
-var orders map[string] order
+type Tenant struct {
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Image string `json:"image"`
+	Products []Products `json:"products"`
+}
