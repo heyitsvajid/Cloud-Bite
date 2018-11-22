@@ -77,7 +77,7 @@
 </br>
 
 ####    POST /cart
-    Add items from cart selected by user
+    Add items to cart selected by user
     POST /tenant/user/item_name HTTP/1.1
     Accept: application/json
     
