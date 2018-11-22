@@ -70,6 +70,34 @@ func getBurgerCountersHandler(err error, msg string){
 		formatter.JSON(w, http.StatusOK, result)
 	}
 }
+
+func postBurgerCountersHandler(err error, msg string){
+	return func(w http.ResponseWriter, req *http.Request) {
+    	var m counter
+    	_ = json.NewDecoder(req.Body).Decode(&m)		
+    	fmt.Println("Posting  Burger data on the basis of Zip Code")
+		session, err := mgo.Dial(mongodb_server)
+        if err != nil {
+                panic(err)
+        }
+        defer session.Close()
+        session.SetMode(mgo.Monotonic, true)
+        c := session.DB(mongodb_database).C(mongodb_collection)
+        query := bson.M{"zip" : "95110"}
+        err = c.get(query, change)
+        if err != nil {
+                log.Fatal(err)
+        }
+       	var result bson.M
+        err = c.Find(bson.M{"zip" : "95110"}).One(&result)
+        if err != nil {
+                log.Fatal(err)
+        }        
+        fmt.Println("Number of counter burgers in 95110 are :", result )
+		formatter.JSON(w, http.StatusOK, result)
+	}
+}
+
 // Helper Functions
 func failOnError(err error, msg string) {
 	if err != nil {
@@ -84,3 +112,5 @@ func pingHandler(formatter *render.Render) http.HandlerFunc {
 		formatter.JSON(w, http.StatusOK, struct{ Test string }{"API version 1.0 alive!"})
 	}
 }
+
+
