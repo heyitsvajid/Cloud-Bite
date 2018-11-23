@@ -20,7 +20,7 @@ import (
 // MongoDB Config
 var mongodb_server = "mongodb://cmpe281:cmpe281@ds051007.mlab.com:51007/saas"
 var mongodb_database = "saas"
-var mongodb_collection = "order"
+var mongodb_collection = "user"
 
 // NewServer configures and returns a Server.
 func NewServer() *negroni.Negroni {
@@ -52,10 +52,75 @@ func failOnError(err error, msg string) {
 	}
 }
 
+/*
+
+session, err := mgo.Dial(mongodb_server)
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+	session.SetMode(mgo.Monotonic, true)
+
+	var tenant Tenant
+	if err := json.NewDecoder(req.Body).Decode(&tenant); err != nil {
+		fmt.Println(" Error: ", err)
+		formatter.JSON(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	uuid,_ := uuid.NewV4()
+	tenant.ID = uuid.String()
+	c := session.DB(mongodb_database).C(mongodb_collection)
+
+	if err := c.Insert(&tenant); err != nil {
+		fmt.Println(" Error: ", err)
+		formatter.JSON(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	formatter.JSON(w, http.StatusCreated, tenant)
+
+*/
+
+// Post Order API
+func orderProcessHandler(formatter *render.Render) http.HandlerFunc {
+	//TODO  : Gte email, tenant id and order JSON object from UI, 
+	//TODO : In mongo, find using tenant ID and email, and oush order object to order array.
+	return func(w http.ResponseWriter, req *http.Request) {
+		session, err := mgo.Dial(mongodb_server)
+		if err != nil {
+			panic(err)
+		}
+		defer session.Close()
+		session.SetMode(mgo.Monotonic, true)
+
+		var order Order
+		if err := json.NewDecoder(req.Body).Decode(&tenant); err != nil {
+			fmt.Println(" Error: ", err)
+			formatter.JSON(w, http.StatusBadRequest, "Invalid request payload")
+			return
+		}
+		uuid,_ := uuid.NewV4()
+		tenant.ID = uuid.String()
+		c := session.DB(mongodb_database).C(mongodb_collection)
+
+//		query := bson.M{"ownerEmail": "john.smith@gmail.com"}
+//		update := bson.M{"$push": bson.M{"items": bson.M{"name": "burger", "location": "some other Place"}}}
+		var tenant_id string = req.Body.tenant_id
+
+		//c.Find(bson.M{"tenants": bson.M{"$in":}})
+	/*	if err := c.Insert(&order); err != nil {
+			fmt.Println(" Error: ", err)
+			formatter.JSON(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+*/
+		formatter.JSON(w, http.StatusCreated, order)
+	}
+}
+
 // API Ping Handler
 func pingHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		formatter.JSON(w, http.StatusOK, struct{ Test string }{"API version 1.0 alive!"})
+		formatter.JSON(w, http.StatusOK, struct{ Test string }{"Multi-tenant Food Ordering version 1.0 alive!"})
 	}
 }
 

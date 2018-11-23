@@ -61,7 +61,7 @@
 
 </br>
 
-### Orders resource
+### Cart resource
 
 ####    GET /cart
     Get all items in cart within the /user resource
@@ -102,12 +102,26 @@
 
 </br>
 
+### Order resource
+
 ####    POST /order
     Place order from cart within the /user resource
-    POST /tenant/user/cart HTTP/1.1
+    POST /order HTTP/1.1
     Accept: application/json
     
-    Body: {"tenant_id": 123, "user_id": 456, "items": [{name, amount, description, image_url, count}]}
+    Body: {"tenant_id": 123, "email": 456, "orders": {   order_id: String
+                    items: [  
+                        {  
+                        name: String,              
+                        amount: Number,  
+                        description: String,  
+                        image_url: String,  
+                        count : Number  
+                        }  
+                                ]  
+                            }  
+                     
+                    }
     
     Response:
     - 201 Created
@@ -116,12 +130,12 @@
 </br>
 
 
-####    GET /order
+####    GET /order/{id}
     Get all items in cart within the /user resource
     GET tenant/user/order HTTP/1.1
     Accept: application/json
     
-    Body: {"tenant_id": 123, "user_id": 456}
+
     
     Response: {"items": [{name, amount, description, image_url, count}]}
     - 200 Success

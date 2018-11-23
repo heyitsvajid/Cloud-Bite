@@ -34,6 +34,7 @@
                 password: String,  
                 orders: [  
                             {  
+                    order_id: String
                     items: [  
                         {  
                         name: String,              
