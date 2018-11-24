@@ -41,6 +41,7 @@ func NewServer() *negroni.Negroni {
 // API Routes
 func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/getBurgerCounters", getBurgerCountersHandler(formatter)).Methods("GET")
+	mx.HandleFunc("/testUpdateQueryMongo", testUpdateQueryMongo(formatter)).Methods("POST")
 	
 }
 
@@ -68,6 +69,35 @@ func getBurgerCountersHandler(err error, msg string){
         }        
         fmt.Println("Number of counter burgers in 95110 are :", result )
 		formatter.JSON(w, http.StatusOK, result)
+	}
+}
+
+func testUpdateQueryMongo(err error, msg string){
+	return func(w http.ResponseWriter, req *http.Request) {
+    	session, err := mgo.Dial(mongodb_server)
+		if err != nil {
+			panic(err)
+		}
+		defer session.Close()
+		session.SetMode(mgo.Monotonic, true)
+		if err := json.NewDecoder(req.Body).Decode(&tenant); err != nil {
+			fmt.Println(" Error: ", err)
+			formatter.JSON(w, http.StatusBadRequest, "Invalid request payload")
+			return
+		}
+		c := session.DB(mongodb_database).C("test")
+
+		query := bson.M{"ownerEmail": "john.smith@gmail.com"}
+		update := bson.M{"$push": bson.M{"items": bson.M{"name": "burger", "location": "some other Place"}}}
+		var test_id string = req.Body.test_id
+
+		if err := c.Insert(&order); err != nil {
+			fmt.Println(" Error: ", err)
+			formatter.JSON(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+		formatter.JSON(w, http.StatusCreated, order)
+	}
 	}
 }
 
