@@ -14,7 +14,9 @@ import (
 	"github.com/unrolled/render"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"github.com/satori/go.uuid")
+	"github.com/satori/go.uuid"
+//	"github.com/rs/cors"
+)
 
 // MongoDB Config
 var mongodb_server = "mongodb://cmpe281:cmpe281@ds051007.mlab.com:51007/saas"
@@ -49,6 +51,7 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/tenant/{id}", tenantHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/tenant", tenantUpdateHandler(formatter)).Methods("PUT")
 	mx.HandleFunc("/tenant", tenantNewEntryHandler(formatter)).Methods("POST")
+	mx.HandleFunc("/tenant", optionsHandler(formatter)).Methods("OPTIONS")
 	mx.HandleFunc("/tenants", tenantAllHandler(formatter)).Methods("GET")
 }
 
@@ -57,6 +60,15 @@ func failOnError(err error, msg string) {
 	if err != nil {
 		log.Fatalf("%s: %s", msg, err)
 		panic(fmt.Sprintf("%s: %s", msg, err))
+	}
+}
+
+//API Ping Handler
+func optionsHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+		fmt.Println("options handler PREFLIGHT Request")
+			return
 	}
 }
 
@@ -123,9 +135,9 @@ func tenantAllHandler(formatter *render.Render) http.HandlerFunc {
 		}
 		defer session.Close()
 		session.SetMode(mgo.Monotonic, true)
-		var result bson.M
+		var result []Tenant
 		c := session.DB(mongodb_database).C(mongodb_collection)
-		err = c.Find(bson.M{}).One(&result)
+		err = c.Find(bson.M{}).All(&result)
 		if err != nil {
 			fmt.Println(" Error: ", err)
 			formatter.JSON(w, http.StatusBadRequest, "Not Found")
@@ -145,6 +157,7 @@ func tenantUpdateHandler(formatter *render.Render) http.HandlerFunc {
 			fmt.Println("PREFLIGHT Request")
 			return
 		}
+
     	var m Tenant
     	_ = json.NewDecoder(req.Body).Decode(&m)		
 
@@ -196,6 +209,8 @@ func tenantNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 		formatter.JSON(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
+	fmt.Println("Adding Tenant: ", tenant)
+
 	uuid,_ := uuid.NewV4()
 	tenant.ID = uuid.String()
 	c := session.DB(mongodb_database).C(mongodb_collection)
@@ -209,3 +224,4 @@ func tenantNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 
 	}
 }
+
