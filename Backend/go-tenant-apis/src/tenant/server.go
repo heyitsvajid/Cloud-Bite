@@ -34,6 +34,12 @@ func NewServer() *negroni.Negroni {
 	mx := mux.NewRouter()
 	initRoutes(mx, formatter)
 	n.UseHandler(mx)
+	// c := cors.New(cors.Options{
+	//     AllowedOrigins: []string{"*"},
+	//     AllowedHeaders: []string{"Content-Type"},
+	//     AllowedMethods: []string{"GET", "POST", "PATCH","PUT", "DELETE, OPTIONS"},
+	// })
+	// n.Use(c)
 	return n
 }
 
