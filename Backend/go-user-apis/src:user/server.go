@@ -38,8 +38,8 @@ func NewServer() *negroni.Negroni {
 func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/ping", pingHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/user/{id}", userHandler(formatter)).Methods("GET")
-	//mx.HandleFunc("/user", userNewEntryHandler(formatter)).Methods("POST")
-	//mx.HandleFunc("/users", userAllHandler(formatter)).Methods("GET")
+	mx.HandleFunc("/user", userNewEntryHandler(formatter)).Methods("POST")
+	mx.HandleFunc("/users", userAllHandler(formatter)).Methods("GET")
 }
 
 // Helper Functions
@@ -84,4 +84,57 @@ func userHandler(formatter *render.Render) http.HandlerFunc {
 		}
 	}
 }
+
+// API Get All user Details
+func userAllHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		session, err := mgo.Dial(mongodb_server)
+		if err != nil {
+			panic(err)
+		}
+		defer session.Close()
+		session.SetMode(mgo.Monotonic, true)
+		var result bson.M
+		c := session.DB(mongodb_database).C(mongodb_collection)
+		err = c.Find(bson.M{}).One(&result)
+		if err != nil {
+			fmt.Println(" Error: ", err)
+			formatter.JSON(w, http.StatusBadRequest, "Not Found")
+		}
+		fmt.Println("All Users:", result)
+		formatter.JSON(w, http.StatusOK, result)
+		
+	}
+}
+
+// API Create user
+func userNewEntryHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+	session, err := mgo.Dial(mongodb_server)
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+	session.SetMode(mgo.Monotonic, true)
+
+	var user User
+	if err := json.NewDecoder(req.Body).Decode(&user); err != nil {
+		fmt.Println(" Error: ", err)
+		formatter.JSON(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	uuid,_ := uuid.NewV4()
+	user.ID = uuid.String()
+	c := session.DB(mongodb_database).C(mongodb_collection)
+
+	if err := c.Insert(&user); err != nil {
+		fmt.Println(" Error: ", err)
+		formatter.JSON(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	formatter.JSON(w, http.StatusCreated, user)
+
+	}
+}
+
 
