@@ -15,12 +15,15 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/satori/go.uuid"
+//	"github.com/rs/cors"
 )
 
 // MongoDB Config
 var mongodb_server = "mongodb://cmpe281:cmpe281@ds051007.mlab.com:51007/saas"
 var mongodb_database = "saas"
 var mongodb_collection = "tenant"
+
+
 
 // NewServer configures and returns a Server.
 func NewServer() *negroni.Negroni {
@@ -31,11 +34,19 @@ func NewServer() *negroni.Negroni {
 	mx := mux.NewRouter()
 	initRoutes(mx, formatter)
 	n.UseHandler(mx)
+	// c := cors.New(cors.Options{
+	//     AllowedOrigins: []string{"*"},
+	//     AllowedHeaders: []string{"Content-Type"},
+	//     AllowedMethods: []string{"GET", "POST", "PATCH","PUT", "DELETE, OPTIONS"},
+	// })
+	// n.Use(c)
 	return n
 }
 
 // API Routes
 func initRoutes(mx *mux.Router, formatter *render.Render) {
+
+
 	mx.HandleFunc("/ping", pingHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/tenant/{id}", tenantHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/tenant", tenantUpdateHandler(formatter)).Methods("PUT")
@@ -51,16 +62,28 @@ func failOnError(err error, msg string) {
 	}
 }
 
-// API Ping Handler
+//API Ping Handler
 func pingHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		formatter.JSON(w, http.StatusOK, struct{ Test string }{"API version 1.0 alive!"})
 	}
 }
 
+func setupResponse(w *http.ResponseWriter, req *http.Request) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS")
+    (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+}
+
 // API Get Tenant Details
 func tenantHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+
+		if (*req).Method == "OPTIONS" {
+			fmt.Println("PREFLIGHT Request")
+			return
+		}
 		session, err := mgo.Dial(mongodb_server)
 		if err != nil {
 			panic(err)
@@ -69,7 +92,7 @@ func tenantHandler(formatter *render.Render) http.HandlerFunc {
 		session.SetMode(mgo.Monotonic, true)
 		params := mux.Vars(req)
 		var id string = params["id"]
-		fmt.Println("Order ID: ", id)
+		fmt.Println("Tenant ID: ", id)
 		var result bson.M
 		if id == "" {
 			formatter.JSON(w, http.StatusBadRequest, "Tenant ID Missing")
@@ -86,9 +109,16 @@ func tenantHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
-// API Get All Tenant Details
+//API Get All Tenant Details
 func tenantAllHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+	
+		if (*req).Method == "OPTIONS" {
+			fmt.Println("PREFLIGHT Request")
+			return
+		}
+
 		session, err := mgo.Dial(mongodb_server)
 		if err != nil {
 			panic(err)
@@ -119,6 +149,13 @@ func tenantUpdateHandler(formatter *render.Render) http.HandlerFunc {
 // API Create Tenant
 func tenantNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+	
+		if (*req).Method == "OPTIONS" {
+			fmt.Println("PREFLIGHT Request")
+			return
+		}
+
 	session, err := mgo.Dial(mongodb_server)
 	if err != nil {
 		panic(err)
