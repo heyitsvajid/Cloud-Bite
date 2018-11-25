@@ -14,9 +14,7 @@ import (
 	"github.com/unrolled/render"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"github.com/satori/go.uuid"
-//	"github.com/rs/cors"
-)
+	"github.com/satori/go.uuid")
 
 // MongoDB Config
 var mongodb_server = "mongodb://cmpe281:cmpe281@ds051007.mlab.com:51007/saas"
