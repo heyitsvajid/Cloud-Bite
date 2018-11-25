@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "703cf851-7043-49b7-beec-974d348a02a4",
+		"name": "CMPE 281 Team Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Tenant with Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/tenant/62b78000-13aa-418b-bc39-31e24749c163",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tenant",
+						"62b78000-13aa-418b-bc39-31e24749c163"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Tenants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/tenants",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tenants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Add Tenant",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Burger Counter\",\n    \"image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR52UXNuBRYAYkYelOrOyJARDYFVoElqTo_ecXQY09gfKZTnaFRYQ\",\n    \"products\": [\n        {\n            \"name\": \"Vegie Burger\",\n            \"amount\": \"10\",\n            \"description\": \"This is my first burger\",\n            \"image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR52UXNuBRYAYkYelOrOyJARDYFVoElqTo_ecXQY09gfKZTnaFRYQ\"\n        },\n        {\n            \"name\": \"Ham Burger\",\n            \"amount\": \"12\",\n            \"description\": \"This is my second burger\",\n            \"image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR52UXNuBRYAYkYelOrOyJARDYFVoElqTo_ecXQY09gfKZTnaFRYQ\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/tenant",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tenant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Update Tenant",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"_id\": \"5bf311fe623f29c5198a141d\",\n    \"id\": \"62b78000-13aa-418b-bc39-31e24749c163\",\n    \"image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR52UXNuBRYAYkYelOrOyJARDYFVoElqTo_ecXQY09gfKZTnaFRYQ\",\n    \"name\": \"Burger Counter\",\n    \"products\": [\n        {\n            \"amount\": \"10\",\n            \"description\": \"This is my first burger\",\n            \"image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR52UXNuBRYAYkYelOrOyJARDYFVoElqTo_ecXQY09gfKZTnaFRYQ\",\n            \"name\": \"Vegie Burger\"\n        },\n        {\n            \"amount\": \"12\",\n            \"description\": \"This is my second burger\",\n            \"image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR52UXNuBRYAYkYelOrOyJARDYFVoElqTo_ecXQY09gfKZTnaFRYQ\",\n            \"name\": \"Ham Burger\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/tenant",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tenant"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
