@@ -38,8 +38,11 @@ func NewServer() *negroni.Negroni {
 func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/ping", pingHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/user/{id}", userHandler(formatter)).Methods("GET")
-	//mx.HandleFunc("/user", userNewEntryHandler(formatter)).Methods("POST")
-	//mx.HandleFunc("/users", userAllHandler(formatter)).Methods("GET")
+	mx.HandleFunc("/user", userNewEntryHandler(formatter)).Methods("POST")
+	mx.HandleFunc("/user/email/{id}", userByEmailHandler(formatter)).Methods("GET")
+	mx.HandleFunc("/user/tenant", userUpdateTenantsHandler(formatter)).Methods("PUT")
+	mx.HandleFunc("/user", optionsHandler(formatter)).Methods("OPTIONS")
+	mx.HandleFunc("/users", userAllHandler(formatter)).Methods("GET")
 }
 
 // Helper Functions
@@ -48,6 +51,21 @@ func failOnError(err error, msg string) {
 		log.Fatalf("%s: %s", msg, err)
 		panic(fmt.Sprintf("%s: %s", msg, err))
 	}
+}
+
+//API Options Handler
+func optionsHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+		fmt.Println("options handler PREFLIGHT Request")
+			return
+	}
+}
+
+func setupResponse(w *http.ResponseWriter, req *http.Request) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS")
+    (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 }
 
 // API Ping Handler
@@ -60,6 +78,13 @@ func pingHandler(formatter *render.Render) http.HandlerFunc {
 // API Get user Details
 func userHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+
+		if (*req).Method == "OPTIONS" {
+			fmt.Println("PREFLIGHT Request")
+			return
+		}
+
 		session, err := mgo.Dial(mongodb_server)
 		if err != nil {
 			panic(err)
@@ -68,7 +93,7 @@ func userHandler(formatter *render.Render) http.HandlerFunc {
 		session.SetMode(mgo.Monotonic, true)
 		params := mux.Vars(req)
 		var id string = params["id"]
-		fmt.Println("Order ID: ", id)
+		fmt.Println("User ID: ", id)
 		var result bson.M
 		if id == "" {
 			formatter.JSON(w, http.StatusBadRequest, "User ID Missing")
@@ -85,18 +110,61 @@ func userHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
-// API Get All user Details
-func userAllHandler(formatter *render.Render) http.HandlerFunc {
+
+// API Get user by email
+func userByEmailHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+
+		if (*req).Method == "OPTIONS" {
+			fmt.Println("PREFLIGHT Request")
+			return
+		}
+
 		session, err := mgo.Dial(mongodb_server)
 		if err != nil {
 			panic(err)
 		}
 		defer session.Close()
 		session.SetMode(mgo.Monotonic, true)
+		params := mux.Vars(req)
+		var id string = params["id"]
+		fmt.Println("Email: ", id)
 		var result bson.M
+		if id == "" {
+			formatter.JSON(w, http.StatusBadRequest, "Email ID Missing")
+		} else {
+			c := session.DB(mongodb_database).C(mongodb_collection)
+			err = c.Find(bson.M{"email":id}).One(&result)
+			if err != nil {
+			fmt.Println(" User: ", err)
+			formatter.JSON(w, http.StatusBadRequest, "Not Found")
+			}
+			fmt.Println(" User: ", result)
+			formatter.JSON(w, http.StatusOK, result)
+		}
+	}
+}
+
+
+// API Get All user Details
+func userAllHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+	
+		if (*req).Method == "OPTIONS" {
+			fmt.Println("PREFLIGHT Request")
+			return
+		}
+		session, err := mgo.Dial(mongodb_server)
+		if err != nil {
+			panic(err)
+		}
+		defer session.Close()
+		session.SetMode(mgo.Monotonic, true)
+		var result []User
 		c := session.DB(mongodb_database).C(mongodb_collection)
-		err = c.Find(bson.M{}).One(&result)
+		err = c.Find(bson.M{}).All(&result)
 		if err != nil {
 			fmt.Println(" Error: ", err)
 			formatter.JSON(w, http.StatusBadRequest, "Not Found")
@@ -110,6 +178,12 @@ func userAllHandler(formatter *render.Render) http.HandlerFunc {
 // API Create user
 func userNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+	setupResponse(&w, req)
+
+	if (*req).Method == "OPTIONS" {
+		fmt.Println("PREFLIGHT Request")
+		return
+	}
 	session, err := mgo.Dial(mongodb_server)
 	if err != nil {
 		panic(err)
@@ -137,4 +211,39 @@ func userNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
+// API Update user handler
+func userUpdateTenantsHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+	
+		if (*req).Method == "OPTIONS" {
+			fmt.Println("PREFLIGHT Request")
+			return
+		}
 
+    	var m User
+    	_ = json.NewDecoder(req.Body).Decode(&m)		
+
+    	fmt.Println("Update User Details: ", m.Tenants)
+		session, err := mgo.Dial(mongodb_server)
+        if err != nil {
+                panic(err)
+        }
+        defer session.Close()
+        session.SetMode(mgo.Monotonic, true)
+        c := session.DB(mongodb_database).C(mongodb_collection)
+        query := bson.M{"id" : m.ID}
+        change := bson.M{"$set": bson.M{ "tenants" : m.Tenants}}
+        err = c.Update(query, change)
+        if err != nil {
+                log.Fatal(err)
+        }
+       	var result bson.M
+        err = c.Find(bson.M{"id" : m.ID}).One(&result)
+        if err != nil {
+                log.Fatal(err)
+        }        
+        fmt.Println("Tenant Updated", result )
+		formatter.JSON(w, http.StatusOK, result)
+	}
+}

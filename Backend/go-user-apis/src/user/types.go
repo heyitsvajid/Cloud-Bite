@@ -23,10 +23,9 @@ type Items struct {
 	Name string `json:"name"`
 	Amount int `json:"amount"`
 	Description string `json:"description"`
-	Image_url string `json:"image_url"`
+	Image string `json:"image_url"`
 	Count int `json:"count"`
 }
-
 
 type User struct {
 	ID string `json:"id"`
