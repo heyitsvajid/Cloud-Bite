@@ -11,7 +11,7 @@
 ## Project Modules
 
 - [Database](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Backend/DB%20Schema.md)
-- [Frontend]
+- [Frontend](https://github.com/nguyensjsu/fa18-281-avengers/tree/master/Frontend)
 - [Backend](https://github.com/nguyensjsu/fa18-281-avengers/tree/master/Backend)
 - Infrastructure
 
@@ -34,5 +34,7 @@
 ### Architecture Diagram
 
 * [Link to Architecture Diagram](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_BurgerOrderSytem.png)
+<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_BurgerOrderSytem.png" width="600" height="400" />
 
 * [Link to Flow Chart](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Flow_Chart.png)
+

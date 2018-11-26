@@ -1,4 +1,3 @@
-
 all: clean
 
 clean: 
@@ -22,19 +21,19 @@ main:
 	go run src/app/main.go
 
 format:
-	go fmt tenant
+	go fmt user
 
 install:
-	go install tenant
+	go install user
 
 build:
-	go build tenant
+	go build user
 
 start:
-	tenant.exe
+	user.exe
 
 docker-build: 
-	docker build -t tenant .
+	docker build -t user .
 	docker images
 
 network-create:
