@@ -104,10 +104,13 @@ class Signup extends Component {
                                                 </div>
                                             <label for="EmailnameBox">Email Address</label>
                                             <input name="ctl00$GlobalBody$SignOnControl$EmailnameBox" onChange={ this.handleEmailChange } type="text" id="EmailnameBox" />
+                                            <div id = "emailError"></div>
                                             <label for="UsernameBox">Email Address</label>
                                             <input name="ctl00$GlobalBody$SignOnControl$UsernameBox" onChange={ this.handleUsernameChange } type="text" id="UsernameBox" />
+                                            <div id = "usernameError"></div>
                                             <label for="PasswordBox">Password</label>
                                             <input name="ctl00$GlobalBody$SignOnControl$PasswordBox" onChange={ this.handlePasswordChange } type="password" maxlength="40" id="PasswordBox" />
+                                            <div id = "passwordError"></div>
                                             <input type="hidden" name="ctl00$GlobalBody$SignOnControl$CaptchEnabledField" id="GlobalBody_SignOnControl_CaptchEnabledField" />
                                             <a id="ctl00_GlobalBody_SignOnControl_SignInButton" onClick={ this.handleLogin } class="btn-cta full-width" AlternateText="Sign In" data-wss="&amp;lid=Sign_Button" href="javascript:__doPostBack(&#39;ctl00$GlobalBody$SignOnControl$SignInButton&#39;,&#39;&#39;)">Sign In</a>
                                             
