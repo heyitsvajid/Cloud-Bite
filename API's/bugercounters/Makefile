@@ -91,9 +91,6 @@ docker-clean:
 	docker rm gumball
 	docker rmi gumball
 
-docker-ip:
-	docker-machine ip
-
 docker-ps:
 	 docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t"
 

@@ -15,7 +15,6 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/satori/go.uuid"
-//	"github.com/rs/cors"
 )
 
 // MongoDB Config
