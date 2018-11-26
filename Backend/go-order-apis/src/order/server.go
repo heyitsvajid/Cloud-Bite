@@ -168,3 +168,21 @@ func cartAddItemsHandler(formatter *render.Render) http.HandlerFunc {
 		formatter.JSON(w, http.StatusOK, ord)
 	}
 }
+
+//API remove items from cart
+
+func cartRemoveItemsHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		uuid, _ := uuid.NewV4()
+    	var ord = item {
+					item_Id: uuid.String(),            		
+					CartStatus: "Item removed",
+		}
+		if items == nil {
+			items = make(map[string]order)
+		}
+		orders[uuid.String()] = ord
+		fmt.Println( "Items: ", items )
+		formatter.JSON(w, http.StatusOK, ord)
+	}
+}
