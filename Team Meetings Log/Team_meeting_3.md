@@ -1,14 +1,14 @@
-#Team Avengers Meeting #3
+# Team Avengers Meeting #3
 
     Week 3 Meeting Details: 11/11/2018 - 11/17/2018
     Location - SJSU Library, San Jose State University
     Time: 12pm - 3pm
 
-#Meeting Organizer:
+# Meeting Organizer:
 
     Drusti Thakkar
 
-#Team Members:
+# Team Members:
 
     1. Murtaza Manasawala
     2. Vajid Kagdi
@@ -16,7 +16,7 @@
     4. Rohan Acharya
     5. Drusti Thakkar
 
-#Discussion Points:
+# Discussion Points:
 
     - Met and discussed about the working of all the APIs of Burger Counter Application
     - Finalised the deployment model
@@ -25,13 +25,13 @@
     - Started with bug fixes
     - Started with frontend developement
 
-#Action Items:
+# Action Items:
 
     - Updated the KanBan style task board in GitHub folder.
     - Complete API development and bug fixes
     - Develop a basic frontend application and integrate it with the backend
     - Enhance the frontend
 
-#Challenges
+# Challenges
 
     - Golang - learning phase for all team members
