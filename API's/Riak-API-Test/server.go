@@ -31,3 +31,29 @@ func (c *Client) PostBurgerOrder(key, value string) (order, error) {
 	}
 	return ord, nil
 }
+// NewServer configures and returns a Server.
+func NewServer() *negroni.Negroni {
+	formatter := render.New(render.Options{
+		IndentJSON: true,
+	})
+	n := negroni.Classic()
+	mx := mux.NewRouter()
+	initRoutes(mx, formatter)
+	n.UseHandler(mx)
+	return n
+}
+
+func init() {
+
+	// Get Environment Config
+	mysql_connect = os.Getenv("MYSQL")
+	server1 = os.Getenv("RIAK1")
+	server2 = os.Getenv("RIAK2")
+	server3 = os.Getenv("RIAK3")
+
+	fmt.Println("MySQL Connect:", mysql_connect )	
+	fmt.Println("Riak  Server1:", server1 )	
+	fmt.Println("Riak  Server2:", server2 )	
+	fmt.Println("Riak  Server3:", server3 )	
+
+}
