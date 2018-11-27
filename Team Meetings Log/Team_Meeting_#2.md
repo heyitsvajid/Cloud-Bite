@@ -12,7 +12,7 @@
 * Vajid Kagdi
 * Sricheta Ruj
 * Rohan Acharya
-* Drashti Thakkar
+* Drusti Thakkar
 
 ## Discussion Points:
 - Met and discussed different aspects of Burger Counter Application
