@@ -12,7 +12,7 @@
 * Murtaza Manasawala
 * Sricheta Ruj
 * Rohan Acharya
-* Drashti Thakkar
+* Drusti Thakkar
 
 ## Discussion Points:
 - Met and discussed the different project examples like Uber, Starbucks, The Future of Clipper for the project as per the information shared by professor.
