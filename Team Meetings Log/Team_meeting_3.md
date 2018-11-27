@@ -1,6 +1,6 @@
 # Team Avengers Meeting #3
 
-    Week 3 Meeting Details: 11/11/2018 - 11/17/2018
+    Week 3 Meeting Details: 11/18/2018 - 11/24/2018
     Location - SJSU Library, San Jose State University
     Time: 12pm - 3pm
 
