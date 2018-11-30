@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "6851d8a4-ef56-483f-abaa-30def1fb4acd",
+		"name": "Cart API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get order details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3001/order/{{order_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"order",
+						"{{order_id}}"
+					]
+				},
+				"description": "Fetch details of order placed"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3001/orders",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"orders"
+					]
+				},
+				"description": "Get all orders"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Cart",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:3001/carts/{{cart_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"carts",
+						"{{cart_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the items in a cart",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:3001/carts/{{cart_id}}/items",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"carts",
+						"{{cart_id}}",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add an item to a cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5f42d016-1bc9-4470-a9d7-ff776227b302",
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"data\": {\n    \"type\": \"cart_item\",\n    \"id\": \"{{productID}}\",\n    \"quantity\": 2\n  }\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/carts/{{cart_id}}/items",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"carts",
+						"{{cart_id}}",
+						"items"
+					]
+				},
+				"description": "There are two types of items that can be added to a cart. The first is a `cart_item`, this is a product which has been previously been added to your store. Most stores will use a `cart_item` for all of their products - in which case you will pass teh productID as the `id` in the payload.\n\nThe second type of item is a `custom_item`, these are arbitrary items that don't exist outside of the cart they've been added to. These are useful for stores that want to calculate things such as tax or shipping costs just before checkout."
+			},
+			"response": []
+		},
+		{
+			"name": "Update an item in a cart",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"data\": {\n    \"type\": \"cart_item\",\n    \"id\": \"76746981-f63a-45f4-ba9e-59773d89dc2e\",\n    \"quantity\": 2\n  }\n}"
+				},
+				"url": {
+					"raw": "localhost:3001/carts/{{cart_id}}/items/{{itemID}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"carts",
+						"{{cart_id}}",
+						"items",
+						"{{itemID}}"
+					]
+				},
+				"description": "Update an existing item in a cart. The updated cart contents are returned if the call is successful.\n\n**Note:** `{item_id}` in the path is the identifier for the item in the cart **OR** productID.\n\nWhen updating custom itesm you must use the identifier in the cart - you can update more properties of a custom cart item."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an item from a cart",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3001/carts/{{cart_id}}/items/{{cartItemID}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"carts",
+						"{{cart_id}}",
+						"items",
+						"{{cartItemID}}"
+					]
+				},
+				"description": "Delete an item from a cart. The remaining cart contents are returned on a successful delete.\n\n**Note:** `{item_id}` in the path is the identifier for the item in the cart rather than the product_id"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cart",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3001/carts/{{cart_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"carts",
+						"{{cart_id}}"
+					]
+				},
+				"description": "Update an existing item in a cart. The updated cart contents are returned if the call is successful.\n\n**Note:** `{item_id}` in the path is the identifier for the item in the cart **OR** productID.\n\nWhen updating custom itesm you must use the identifier in the cart - you can update more properties of a custom cart item."
+			},
+			"response": []
+		}
+	]
+}
