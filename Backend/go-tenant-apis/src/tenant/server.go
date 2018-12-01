@@ -224,7 +224,7 @@ func tenantNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 	url := "http://35.162.234.7:8001/apis"
 
 	text := strings.ToLower(strings.Replace(tenant.Name, " ", "", -1));
-	payload := strings.NewReader("name="+text+"&request_path=/"+text+"&strip_request_path=true&preserve_host=true&upstream_url=http://35.162.234.7:3000/"+uuid.String())
+	payload := strings.NewReader("name="+text+"&request_path=/"+text+"&strip_request_path=true&preserve_host=true&upstream_url=http://35.162.234.7:3000/tenant/"+uuid.String())
 	fmt.Println(text);
 	
 	request, _ := http.NewRequest("POST", url, payload)
