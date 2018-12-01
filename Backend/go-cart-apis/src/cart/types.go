@@ -7,9 +7,9 @@ package main
 
 
 type CartPayload struct {
-    email_id string `json:"email_id"`              
-    tenant_id string `json:"tenant_id"`
-    Items []Items `json:"items"`
+    Email_id string `json:"email_id"`              
+    Tenant_id string `json:"tenant_id"`
+    Items string `json:"items"`
 }
 
 type Items struct {
