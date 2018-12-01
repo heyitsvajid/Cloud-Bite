@@ -33,8 +33,8 @@
 
 ### Architecture Diagram
 
-* [Link to Architecture Diagram](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_BurgerOrderSytem.png)
-<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_BurgerOrderSytem.png" width="600" height="400" />
+* [Link to Architecture Diagram](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_Diagram_FinalVersion.png)
+<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_Diagram_FinalVersion.png" width="500" height="700" />
 
 * [Link to Flow Chart](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Flow_Chart.png)
 
