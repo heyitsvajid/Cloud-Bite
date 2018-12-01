@@ -211,6 +211,60 @@ func userNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
+//User Login Handler
+func userLoginHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+	setupResponse(&w, req)
+
+	if (*req).Method == "OPTIONS" {
+		fmt.Println("PREFLIGHT Request")
+		return
+	}
+	session, err := mgo.Dial(mongodb_server)
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+	session.SetMode(mgo.Monotonic, true)
+
+	params := mux.Vars(req)
+		var id string = params["email"]
+		//fmt.Println("Tenant ID: ", id)
+		var result bson.M
+		if id == "" {
+			formatter.JSON(w, http.StatusBadRequest, "Tenant ID Missing")
+		} else {
+			c := session.DB(mongodb_database).C(mongodb_collection)
+			err = c.Find(bson.M{"email":id}).One(&result)
+			if err != nil {
+			//fmt.Println("Tenant: ", err)
+			formatter.JSON(w, http.StatusBadRequest, "Not Found")
+			}
+			//fmt.Println(" User: ", result)
+			formatter.JSON(w, http.StatusOK, result) 
+
+	var login LoginPayload 
+	if err := json.NewDecoder(req.Body).Decode(&login); err != nil {
+		fmt.Println(" Error: ", err)
+		formatter.JSON(w, http.StatusBadRequest, "Invalid login payload")
+		return
+	}
+	uuid,_ := uuid.NewV4()
+	login.email = uuid.String() 
+	m := session.DB(mongodb_database).C(mongodb_collection)
+
+	if err := m.Find(&login); err != nil {
+		fmt.Println(" Error: ", err)
+		formatter.JSON(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	formatter.JSON(w, http.StatusCreated, login)
+
+	}
+}
+}
+
+
 // API Update user handler
 func userUpdateTenantsHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
