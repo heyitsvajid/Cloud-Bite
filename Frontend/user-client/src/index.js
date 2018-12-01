@@ -10,7 +10,7 @@ ReactDOM.render(
     <Router>
       <div>
 
-        <Route exact path="/" component={LogIn} />
+        <Route exact path="/:tenant" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/menu" component={Menu} />
       </div>

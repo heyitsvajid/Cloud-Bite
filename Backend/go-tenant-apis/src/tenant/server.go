@@ -5,6 +5,7 @@ Base Project Reference : https://github.com/paulnguyen/cmpe281/tree/master/golab
 package main
 
 import (
+	"strings"
 	"fmt"
 	"log"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/satori/go.uuid"
+	"io/ioutil"
 )
 
 // MongoDB Config
@@ -219,8 +221,27 @@ func tenantNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 		formatter.JSON(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+	url := "http://35.162.234.7:8001/apis"
+
+	text := strings.ToLower(strings.Replace(tenant.Name, " ", "", -1));
+	payload := strings.NewReader("name="+text+"&request_path=/"+text+"&strip_request_path=true&preserve_host=true&upstream_url=http://35.162.234.7:3000/"+uuid.String())
+	fmt.Println(text);
+	
+	request, _ := http.NewRequest("POST", url, payload)
+
+	request.Header.Add("content-type", "application/x-www-form-urlencoded")
+	request.Header.Add("cache-control", "no-cache")
+
+	response, _ := http.DefaultClient.Do(request)
+
+	defer response.Body.Close()
+	body, _ := ioutil.ReadAll(response.Body)
+
+	fmt.Println(string(body))
+
 	formatter.JSON(w, http.StatusCreated, tenant)
 
 	}
 }
+
 

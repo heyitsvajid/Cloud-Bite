@@ -2,20 +2,19 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import '../assets/css/login-css.css'
+import axios from 'axios'
+import swal from 'sweetalert2'
+import { envURL } from '../config/environment';
 
 class Signup extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            name: '',
+            email: '',
             password: '',
-            isLoggedIn: false,
-            errorMsg: ''
         };
-        // this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        // this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        // this.handleLogin = this.handleLogin.bind(this);
     }
 
     // componentWillMount() {
@@ -29,55 +28,60 @@ class Signup extends Component {
     //     });
     // }
 
-    // handleUsernameChange(e) {
-    //     e.preventDefault();
-    //     this.setState({
-    //         username: e.target.value,
-    //         errorMsg: ''
-    //     })
-    // }
+    handleNameChange(e) {
+        e.preventDefault();
+        this.setState({
+            name: e.target.value,
+        })
+    }
 
-    // handleEmailChange(e) {
-    //     e.preventDefault();
-    //     this.setState({
-    //         username: e.target.value,
-    //         errorMsg: ''
-    //     })
-    // }
+    handleEmailChange(e) {
+        e.preventDefault();
+        this.setState({
+            email: e.target.value,
+        })
+    }
 
-    // handlePasswordChange(e) {
-    //     e.preventDefault();
-    //     this.setState({
-    //         password: e.target.value,
-    //         errorMsg: ''
-    //     })
-    // }
+    handlePasswordChange(e) {
+        e.preventDefault();
+        this.setState({
+            password: e.target.value,
+        })
+    }
 
-    // handleLogin(e) {
-    //     e.preventDefault();
+    handleSubmit(e) {
+        e ? e.preventDefault() : '' 
+        
+        var userObj = {};
+        userObj["email"] = "";
 
-    //     //validation of email
-    //     var patt = new RegExp('[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.][a-zA-Z]+');
-    //     var res = patt.test(this.state.username);
-    //     if(res && this.state.password.length > 0 ) {
+        var tenant = {  
+            name: this.state.name,  
+            image_url: this.state.image_url,  
+            products: this.state.products  
+        }  
+        console.log("Adding Tenant : "+tenant)            
+        axios.post(envURL + 'tenant',tenant,{ headers: { 'Content-Type': 'application/json'}})
+        .then(response => { 
+            console.log(response)
+            swal({
+                type: 'success',
+                title: 'Howdy!',
+                text: "You have successfully registered! Please login for some snacks!",
+            })
+        })
+        .catch(error => {
+            console.log(error)
+            swal({
+                type: 'error',
+                title: 'Add Tenant',
+                text: "Error Adding tenant",
+            })
 
-    //         if(this.state.username === 'admin@saas.com' && this.state.password === 'admin') {
-    //             localStorage.setItem('admin-login', true );
-    //             localStorage.setItem('userid', "response.data.data.id" );
-    //             localStorage.setItem('email', "response.data.data.email" );
-    //             localStorage.setItem('first_name', "response.data.data.first_name" ); 
-    //             this.props.history.push('/adminDashboard');
-    //         } else {
-    //             this.setState({
-    //                 errorMsg: 'Invalid Username Or Password'
-    //             })
-    //         }
-    //     } else {
-    //         this.setState({
-    //             errorMsg: 'Invalid Email or password'
-    //         })
-    //     }
-    // }
+            });    
+    }
+
+
 
     render() {
 
@@ -106,61 +110,60 @@ class Signup extends Component {
                                 <div>
                                     <div>
                                         <div class="padding___2PNk5 mx-auto narrow___pLMqt pb5">
-                                            <form method="post" novalidate="">
+                                            <form method="post" novalidate="" onSubmit={this.handleSubmit.bind(this)}>
                                                 <div class="field mb2 field--isInvalid">
                                                     <div class="field__inputWrapper flex">
                                                         {/* <label class="floatLabel color-textBlackSoft" for="username">Username or email address</label> --> */}
-                                                        <input aria-required="true" class="fieldInput" placeholder="Name" id="username" name="username" required="" autocomplete="username" data-e2e="username" data-ga-event="change" data-ga="event: account-signin-input; sectionName: SignIn; inputName: Username" type="text" value="" aria-describedby="username-validationHint" aria-invalid="true"/>
+                                                        <input value={this.state.name} onChange={this.handleNameChange.bind(this)} aria-required="true" class="fieldInput" placeholder="Name" id="username" name="username" required="" autocomplete="username" data-e2e="username" data-ga-event="change" data-ga="event: account-signin-input; sectionName: SignIn; inputName: Username" type="text" aria-describedby="username-validationHint" aria-invalid="true"/>
                                                         <svg viewBox="0 0 24 24" class="valign-middle field__warningIcon self-end flex-shrink-none mb1" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '24px', height: '24px'}}>
                                                             <path d="M12.65 3.04l7.66 14.165c.264.558-.04 1.2-.662 1.2H4.352c-.622 0-.926-.642-.652-1.22l7.644-14.137c.297-.61 1.025-.606 1.307-.008zM11 8.904v3.192c0 .5.448.904 1 .904s1-.405 1-.904V8.904c0-.5-.448-.904-1-.904s-1 .405-1 .904zM11 15c0 .552.448 1 1 1s1-.448 1-1-.448-1-1-1-1 .448-1 1z"></path>
                                                         </svg>
                                                     </div>
                                                     <div class="">
-                                                        <div class=""><span class="block pt2 " id="username-validationHint"><span class="fieldStatus fieldStatus--error"><svg viewBox="0 0 24 24" class="valign-middle fieldStatus__icon" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '20px', height: '20px'}}><path d="M13.06 12l5.72-5.72c.292-.292.292-.767 0-1.06-.294-.293-.768-.293-1.06 0L12 10.94 6.28 5.22c-.293-.293-.767-.293-1.06 0-.293.293-.293.768 0 1.06L10.94 12l-5.72 5.72c-.293.292-.293.767 0 1.06.146.146.338.22.53.22s.384-.074.53-.22L12 13.06l5.72 5.72c.145.146.337.22.53.22.19 0 .383-.074.53-.22.292-.293.292-.768 0-1.06L13.06 12z"></path></svg><span class="fieldStatus__text"><span><span class="hiddenVisually">Error:</span>Enter an email/username.</span>
+                                                        {/* <div class=""><span class="block pt2 " id="username-validationHint"><span class="fieldStatus fieldStatus--error"><svg viewBox="0 0 24 24" class="valign-middle fieldStatus__icon" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '20px', height: '20px'}}><path d="M13.06 12l5.72-5.72c.292-.292.292-.767 0-1.06-.294-.293-.768-.293-1.06 0L12 10.94 6.28 5.22c-.293-.293-.767-.293-1.06 0-.293.293-.293.768 0 1.06L10.94 12l-5.72 5.72c-.293.292-.293.767 0 1.06.146.146.338.22.53.22s.384-.074.53-.22L12 13.06l5.72 5.72c.145.146.337.22.53.22.19 0 .383-.074.53-.22.292-.293.292-.768 0-1.06L13.06 12z"></path></svg><span class="fieldStatus__text"><span><span class="hiddenVisually">Error:</span>Enter an email/username.</span>
                                                             </span>
                                                             </span>
                                                             </span>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                                 <div class="field mb2 field--isInvalid">
                                                     <div class="field__inputWrapper flex">
                                                         {/* <label class="floatLabel color-textBlackSoft" for="username">Email address</label> --> */}
-                                                        <input aria-required="true" class="fieldInput" placeholder="Email Address" id="username" name="username" required="" autocomplete="username" data-e2e="username" data-ga-event="change" data-ga="event: account-signin-input; sectionName: SignIn; inputName: Username" type="text" value="" aria-describedby="username-validationHint" aria-invalid="true"/>
+                                                        <input onChange={this.handleEmailChange.bind(this)} aria-required="true" class="fieldInput" placeholder="Email Address" id="username" name="username" required="" autocomplete="username" data-e2e="username" data-ga-event="change" data-ga="event: account-signin-input; sectionName: SignIn; inputName: Username" type="text" value={this.state.email} aria-describedby="username-validationHint" aria-invalid="true"/>
                                                         <svg viewBox="0 0 24 24" class="valign-middle field__warningIcon self-end flex-shrink-none mb1" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '24px', height: '24px'}}>
                                                             <path d="M12.65 3.04l7.66 14.165c.264.558-.04 1.2-.662 1.2H4.352c-.622 0-.926-.642-.652-1.22l7.644-14.137c.297-.61 1.025-.606 1.307-.008zM11 8.904v3.192c0 .5.448.904 1 .904s1-.405 1-.904V8.904c0-.5-.448-.904-1-.904s-1 .405-1 .904zM11 15c0 .552.448 1 1 1s1-.448 1-1-.448-1-1-1-1 .448-1 1z"></path>
                                                         </svg>
                                                     </div>
                                                     <div class="">
-                                                        <div class=""><span class="block pt2 " id="username-validationHint"><span class="fieldStatus fieldStatus--error"><svg viewBox="0 0 24 24" class="valign-middle fieldStatus__icon" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '20px', height: '20px'}}><path d="M13.06 12l5.72-5.72c.292-.292.292-.767 0-1.06-.294-.293-.768-.293-1.06 0L12 10.94 6.28 5.22c-.293-.293-.767-.293-1.06 0-.293.293-.293.768 0 1.06L10.94 12l-5.72 5.72c-.293.292-.293.767 0 1.06.146.146.338.22.53.22s.384-.074.53-.22L12 13.06l5.72 5.72c.145.146.337.22.53.22.19 0 .383-.074.53-.22.292-.293.292-.768 0-1.06L13.06 12z"></path></svg><span class="fieldStatus__text"><span><span class="hiddenVisually">Error:</span>Enter an email/username.</span>
-                                                            </span>
-                                                            </span>
-                                                            </span>
-                                                        </div>
+                                                            {/* <div class=""><span class="block pt2 " id="username-validationHint"><span class="fieldStatus fieldStatus--error"><svg viewBox="0 0 24 24" class="valign-middle fieldStatus__icon" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '20px', height: '20px'}}><path d="M13.06 12l5.72-5.72c.292-.292.292-.767 0-1.06-.294-.293-.768-.293-1.06 0L12 10.94 6.28 5.22c-.293-.293-.767-.293-1.06 0-.293.293-.293.768 0 1.06L10.94 12l-5.72 5.72c-.293.292-.293.767 0 1.06.146.146.338.22.53.22s.384-.074.53-.22L12 13.06l5.72 5.72c.145.146.337.22.53.22.19 0 .383-.074.53-.22.292-.293.292-.768 0-1.06L13.06 12z"></path></svg><span class="fieldStatus__text"><span><span class="hiddenVisually">Error:</span>Enter an email/username.</span>
+                                                                </span>
+                                                                </span>
+                                                                </span>
+                                                            </div> */}
                                                     </div>
                                                 </div>
                                                 <div class="field mb3 field--isInvalid">
                                                     <div class="field__inputWrapper flex">
-                                                        <label class="floatLabel color-textBlackSoft" for="password">Password</label>
-                                                        <input aria-required="true" class="fieldInput" id="password" name="password" required="" autocomplete="current-password" data-ga-event="change" data-ga="event: account-signin-input; sectionName: SignIn; inputName: Password" data-e2e="password" type="password" value="" aria-describedby="password-validationHint" aria-invalid="true" />
-                                                        <button aria-label="Show password text" class="mb1 color-textBlackSoft text-sm text-bold self-end px3" type="button">
-                                                        </button>
+                                                        {/* <label class="floatLabel color-textBlackSoft" for="password">Password</label> */}
+                                                        <input value={this.state.password} onChange={this.handlePasswordChange.bind(this)} placeholder="Password" aria-required="true" class="fieldInput" id="password" name="password" required="" autocomplete="current-password" data-ga-event="change" data-ga="event: account-signin-input; sectionName: SignIn; inputName: Password" data-e2e="password" type="password"  aria-describedby="password-validationHint" aria-invalid="true" />
+
                                                         <svg viewBox="0 0 24 24" class="valign-middle field__warningIcon self-end flex-shrink-none mb1" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '24px', height: '24px'}}>
                                                             <path d="M12.65 3.04l7.66 14.165c.264.558-.04 1.2-.662 1.2H4.352c-.622 0-.926-.642-.652-1.22l7.644-14.137c.297-.61 1.025-.606 1.307-.008zM11 8.904v3.192c0 .5.448.904 1 .904s1-.405 1-.904V8.904c0-.5-.448-.904-1-.904s-1 .405-1 .904zM11 15c0 .552.448 1 1 1s1-.448 1-1-.448-1-1-1-1 .448-1 1z"></path>
                                                         </svg>
                                                     </div>
                                                     <div class="">
-                                                        <div class=""><span class="block pt2 " id="password-validationHint"><span class="fieldStatus fieldStatus--error"><svg viewBox="0 0 24 24" class="valign-middle fieldStatus__icon" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '20px', height: '20px'}}><path d="M13.06 12l5.72-5.72c.292-.292.292-.767 0-1.06-.294-.293-.768-.293-1.06 0L12 10.94 6.28 5.22c-.293-.293-.767-.293-1.06 0-.293.293-.293.768 0 1.06L10.94 12l-5.72 5.72c-.293.292-.293.767 0 1.06.146.146.338.22.53.22s.384-.074.53-.22L12 13.06l5.72 5.72c.145.146.337.22.53.22.19 0 .383-.074.53-.22.292-.293.292-.768 0-1.06L13.06 12z"></path></svg><span class="fieldStatus__text"><span><span class="hiddenVisually">Error:</span>Enter a password.</span>
+                                                        {/* <div class=""><span class="block pt2 " id="password-validationHint"><span class="fieldStatus fieldStatus--error"><svg viewBox="0 0 24 24" class="valign-middle fieldStatus__icon" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" style={{width: '20px', height: '20px'}}><path d="M13.06 12l5.72-5.72c.292-.292.292-.767 0-1.06-.294-.293-.768-.293-1.06 0L12 10.94 6.28 5.22c-.293-.293-.767-.293-1.06 0-.293.293-.293.768 0 1.06L10.94 12l-5.72 5.72c-.293.292-.293.767 0 1.06.146.146.338.22.53.22s.384-.074.53-.22L12 13.06l5.72 5.72c.145.146.337.22.53.22.19 0 .383-.074.53-.22.292-.293.292-.768 0-1.06L13.06 12z"></path></svg><span class="fieldStatus__text"><span><span class="hiddenVisually">Error:</span>Enter a password.</span>
                                                             </span>
                                                             </span>
                                                             </span>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                                 
                                                 {/* <p class="mb3"><a class="color-greenStarbucks" href="/account/forgot-password">Forgot your password?</a></p> */}
                                                 <div class="invisible base___3dWsJ md___X7jh3  ">
-                                                    <div class="slider___1lmdn" style={{transform: 'none'}}><span class="flex flex-column items-end"><div class="visible"><button class="sb-frap" type="submit" data-e2e="signInButton" data-ga-event="click" data-ga="event: account-signin-submit-click; sectionName: SignIn; inputName: Sign-In">Sign in</button></div></span></div>
+                                                    <div class="slider___1lmdn" style={{transform: 'none'}}><span class="flex flex-column items-end"><div class="visible"><button class="sb-frap" type="submit" data-e2e="signInButton" data-ga-event="click" data-ga="event: account-signin-submit-click; sectionName: SignIn; inputName: Sign-In">Register</button></div></span></div>
                                                 </div>
                                             </form>
                                         </div>
