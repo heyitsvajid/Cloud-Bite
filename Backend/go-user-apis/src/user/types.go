@@ -33,4 +33,11 @@ type User struct {
 	Tenants []Tenants `json:"tenants"`
 }
 
+type LoginPayload struct {
+	Email string `json:"email"` 
+	Password string `json:"password"` 
+} 
+
+
+
 
