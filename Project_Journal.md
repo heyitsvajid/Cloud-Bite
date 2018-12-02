@@ -10,7 +10,7 @@
 
 ## Architecture Diagram
 
-<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_Diagram_FinalVersion.png" width="500" height="700" />
+<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/ArchitectureDiagram_finalVersion.png" width="500" height="700" />
 
 ## Description
 
