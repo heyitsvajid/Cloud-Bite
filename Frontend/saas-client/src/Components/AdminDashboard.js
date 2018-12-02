@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import '../assets/css/admin.css'
-import AllBillingDetails from './AllBillingDetails';
-import ListAllUsers from './ListAllUsers'
-import AdminGraphs from './AdminGraphs';
 import MultiplexForm from './TenantForm';
 
 
@@ -94,39 +91,11 @@ class AdminDashboard extends Component {
                             <ul class="sidebar-menu scrollable pos-r ps">
 
                             {localStorage.getItem('roleId')==3 ?
-                            <li class="nav-item" value={addDashboard} onClick={this.handleLinkClick.bind(this)} data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
-                                <a class="sidebar-link" href="#" value={addMultiplexAdmin} onClick={this.handleLinkClick.bind(this)}>
-                                    <span class="icon-holder">
-                                        <i class="c-indigo-500 ti-bar-chart"></i> 
-                                        </span><span class="title"> Analytics Dashboard
-                                    </span>
-                                </a>
-                            </li> : ''}
-
-                            {localStorage.getItem('roleId')==3 ?
                             <li class="nav-item" value={addMultiplex} onClick={this.handleLinkClick.bind(this)} data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
                                 <a class="sidebar-link" href="#" value={addMultiplex} onClick={this.handleLinkClick.bind(this)}>
                                     <span class="icon-holder">
                                         <i class="c-red-500 ti-files"></i> 
                                         </span><span class="title">Tenant Dashboard</span>
-                                </a>
-                            </li> : ''}
-
-                            {localStorage.getItem('roleId')==3 ?
-                            <li class="nav-item" value={showBillingDetails} onClick={this.handleLinkClick.bind(this)} data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
-                                <a class="sidebar-link" href="#" value={showBillingDetails} onClick={this.handleLinkClick.bind(this)}>
-                                    <span class="icon-holder">
-                                        <i class="c-orange-500 ti-layout-list-thumb"></i> 
-                                        </span><span class="title">Show Billing Details</span>
-                                </a>
-                            </li> : ''}
-
-                            {localStorage.getItem('roleId')==3 ?
-                            <li class="nav-item" value={listUsers} onClick={this.handleLinkClick.bind(this)} data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
-                                <a class="sidebar-link" href="#" value={listUsers} onClick={this.handleLinkClick.bind(this)}>
-                                    <span class="icon-holder">
-                                        <i class="c-teal-500 ti-view-list-alt"></i> 
-                                        </span><span class="title">Show Users List</span>
                                 </a>
                             </li> : ''}
 
@@ -174,53 +143,7 @@ class AdminDashboard extends Component {
             )
     }
 
-    returnDashboard() {
-        return (
-            <div class="container-fluid">
-            <h3 class="data-header">Dashboard</h3>
-            <br/>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="admin-list bgc-white bd bdrs-3 p-20 mB-20">
-                    <AdminGraphs />
-                    </div>
-                </div>
-            </div>            
-        </div>
-        )
-    }
-    returnUserList() {
-        return (
-            <div class="container-fluid">
-            <h3 class="data-header">User Details Dashboard</h3>
-            <br/>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="admin-list bgc-white bd bdrs-3 p-20 mB-20">
-                    <ListAllUsers />
-                    </div>
-                </div>
-            </div>            
-        </div>
-        )
-    }
-
-    returnBillingDetails() {
-        return (
-            <div class="container-fluid">
-            <h3 class="data-header">All Billing Details</h3>
-            <br/>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="admin-list bgc-white bd bdrs-3 p-20 mB-20">
-                    <AllBillingDetails />
-                    </div>
-                </div>
-            </div>            
-        </div>
-        )
-    }
-
+    
     returnMultiplex() {
         return (
             <div class="container-fluid">

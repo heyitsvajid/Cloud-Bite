@@ -17,7 +17,7 @@ RUN npm install
 COPY . .
 
 # Expose Port
-EXPOSE 8080
+EXPOSE 3006
 
 # Startup
 CMD [ "npm", "start" ]

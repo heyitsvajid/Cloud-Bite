@@ -1,7 +1,12 @@
 
 
 //Local
-var envURL = 'http://localhost:3000/'
+// var envURL = 'http://localhost:3000/'
+// var reactURL= 'http://localhost:3006/'
+
+
+//AWS Load Balancer
+var envURL = 'http://tenant-lb-1590441743.us-west-1.elb.amazonaws.com/'
 var reactURL= 'http://localhost:3006/'
 
 
