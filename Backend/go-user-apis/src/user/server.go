@@ -18,7 +18,7 @@ import (
 )
 
 // MongoDB Config
-var mongodb_server = "mongodb://cmpe281:cmpe281@ds051007.mlab.com:51007/saas"
+var mongodb_server = "mongodb://admin:saas@35.175.57.209:27017/saas"
 var mongodb_database = "saas"
 var mongodb_collection = "user"
 
@@ -40,7 +40,7 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/user/{id}", userHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/user", userNewEntryHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/user/email/{id}", userByEmailHandler(formatter)).Methods("GET")
-	mx.HandleFunc("/user/tenant", userUpdateTenantsHandler(formatter)).Methods("PUT")
+	mx.HandleFunc("/user", userUpdateTenantsHandler(formatter)).Methods("PUT")
 	mx.HandleFunc("/user", optionsHandler(formatter)).Methods("OPTIONS")
 	mx.HandleFunc("/users", userAllHandler(formatter)).Methods("GET")
 }
@@ -211,59 +211,6 @@ func userNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
-//User Login Handler
-func userLoginHandler(formatter *render.Render) http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
-	setupResponse(&w, req)
-
-	if (*req).Method == "OPTIONS" {
-		fmt.Println("PREFLIGHT Request")
-		return
-	}
-	session, err := mgo.Dial(mongodb_server)
-	if err != nil {
-		panic(err)
-	}
-	defer session.Close()
-	session.SetMode(mgo.Monotonic, true)
-
-	params := mux.Vars(req)
-		var id string = params["email"]
-		//fmt.Println("Tenant ID: ", id)
-		var result bson.M
-		if id == "" {
-			formatter.JSON(w, http.StatusBadRequest, "Tenant ID Missing")
-		} else {
-			c := session.DB(mongodb_database).C(mongodb_collection)
-			err = c.Find(bson.M{"email":id}).One(&result)
-			if err != nil {
-			//fmt.Println("Tenant: ", err)
-			formatter.JSON(w, http.StatusBadRequest, "Not Found")
-			}
-			//fmt.Println(" User: ", result)
-			formatter.JSON(w, http.StatusOK, result) 
-
-	var login LoginPayload 
-	if err := json.NewDecoder(req.Body).Decode(&login); err != nil {
-		fmt.Println(" Error: ", err)
-		formatter.JSON(w, http.StatusBadRequest, "Invalid login payload")
-		return
-	}
-	uuid,_ := uuid.NewV4()
-	login.email = uuid.String() 
-	m := session.DB(mongodb_database).C(mongodb_collection)
-
-	if err := m.Find(&login); err != nil {
-		fmt.Println(" Error: ", err)
-		formatter.JSON(w, http.StatusInternalServerError, err.Error())
-		return
-	}
-	formatter.JSON(w, http.StatusCreated, login)
-
-	}
-}
-}
-
 
 // API Update user handler
 func userUpdateTenantsHandler(formatter *render.Render) http.HandlerFunc {
@@ -288,7 +235,7 @@ func userUpdateTenantsHandler(formatter *render.Render) http.HandlerFunc {
         c := session.DB(mongodb_database).C(mongodb_collection)
         query := bson.M{"id" : m.ID}
         change := bson.M{"$set": bson.M{ "tenants" : m.Tenants}}
-        err = c.Update(query, change)
+        _,err = c.UpdateAll(query, change)
         if err != nil {
                 log.Fatal(err)
         }
