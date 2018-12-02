@@ -1,7 +1,6 @@
 /*
-	Gumball API in Go (Version 3)
-	Uses MongoDB and RabbitMQ 
-	(For use with Kong API Key)
+	Gumball API in Go
+	Uses MySQL & Riak KV
 */
 
 package main
