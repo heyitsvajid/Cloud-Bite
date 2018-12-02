@@ -20,7 +20,7 @@ import (
 )
 
 // MongoDB Config
-var mongodb_server = "mongodb://cmpe281:cmpe281@ds051007.mlab.com:51007/saas"
+var mongodb_server = "mongodb://admin:saas@35.175.57.209:27017/saas"
 var mongodb_database = "saas"
 var mongodb_collection = "tenant"
 
