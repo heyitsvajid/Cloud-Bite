@@ -86,7 +86,7 @@ class SignIn extends Component {
                     
                     <div class="page registration authentication-form" role="main">
                         <div class="row">                               
-                                    <div class="panel main-panel sign-up-form large-6 medium-6 small-12 columns">
+                                    <div class="panel main-panel sign-up-form large-6 medium-6 small-12 columns" style={{marginLeft:'41%', marginTop: '4%'}}>
                                         <div class="sub-panel">
                                             <p class="join-header">SAAS<span class="page-header-emphasis">  Admin</span>
                                             </p>
@@ -103,22 +103,10 @@ class SignIn extends Component {
                                             
                                         </div>
                                     </div>
-                         
                         </div>
-                    </div>
-                    <div class="aspNetHidden">
-                        <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8231AAFB" />
-                        <input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
                     </div>
                 </form>
             </div>
-            <footer>
-                <div class="row">
-                    <p class="small-12 small-centered columns copyright">
-                    </p>
-                </div>
-            </footer>
-
         </div>
         )
     }

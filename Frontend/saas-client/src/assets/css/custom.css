@@ -87,10 +87,10 @@ body {
   color: black;
  
 }
-
+/* 
 .header-logo{
   height: 68px !important;
-}
+} */
 
 .page.registration {
   padding: 0;
@@ -942,11 +942,11 @@ a.movie-details__mop-link {
   margin-left: 1%;
   margin-top: 2%;
 }
-
+/* 
 #admin-header{
   margin-top: -40px !important;
   width: 100% !important;
-}
+} */
 
 .header-container {
   margin-left: 70%;
