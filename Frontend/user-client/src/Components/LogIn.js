@@ -31,7 +31,7 @@ class SignIn extends Component {
                 title: 'Add Tenant',
                 text: "Error Adding tenant",
             })
-            });   
+        });
     }
 
     componentDidMount() {
