@@ -1,15 +1,19 @@
 /*
-	Order API in Go 
-	Uses MongoDB
+	Cart API in Go
+	Uses MySQL & Riak KV
 */
-	
+
 package main
 
+type Login struct {
+	Email_id string `json:"email_id"` 	
+	Tenant_id string `json:"tenant_id"`	
+}
 
 type CartPayload struct {
     Email_id string `json:"email_id"`              
     Tenant_id string `json:"tenant_id"`
-    Items string `json:"items"`
+    Items []Items `json:"items"`
 }
 
 type Items struct {
