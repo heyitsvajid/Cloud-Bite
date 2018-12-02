@@ -293,6 +293,18 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/login", loginHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/isLoggedIn/{email_tenant}", loginCheckHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/cart", optionsHandler(formatter)).Methods("OPTIONS")
+	mx.HandleFunc("/login", optionsHandler(formatter)).Methods("OPTIONS")
+	mx.HandleFunc("/logout", optionsHandler(formatter)).Methods("OPTIONS")
+		mx.HandleFunc("/ping", pingHandler(formatter)).Methods("GET")
+
+
+}
+
+// API Ping Handler
+func pingHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		formatter.JSON(w, http.StatusOK, struct{ Test string }{"Riak APIs version 1.0 alive!"})
+	}
 }
 
 // Helper Functions
@@ -364,9 +376,9 @@ func logoutHandler(formatter *render.Render) http.HandlerFunc {
 			ord := c1.logout(key)
 			if ord != ord_err {
 				log.Fatal(ord)
-				formatter.JSON(w, http.StatusBadRequest, ord)
+				formatter.JSON(w, http.StatusBadRequest, struct{ Test string }{"false"})
 			} else {
-				formatter.JSON(w, http.StatusOK, ord)
+				formatter.JSON(w, http.StatusOK, struct{ Test string }{"Logout Successful"})
 			}
 		}
 
