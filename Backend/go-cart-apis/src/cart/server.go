@@ -292,6 +292,7 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/logout", logoutHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/login", loginHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/isLoggedIn/{email_tenant}", loginCheckHandler(formatter)).Methods("GET")
+	mx.HandleFunc("/cart", optionsHandler(formatter)).Methods("OPTIONS")
 }
 
 // Helper Functions
@@ -301,6 +302,16 @@ func failOnError(err error, msg string) {
 		panic(fmt.Sprintf("%s: %s", msg, err))
 	}
 }
+
+//API Ping Handler
+func optionsHandler(formatter *render.Render) http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		setupResponse(&w, req)
+		fmt.Println("options handler PREFLIGHT Request")
+			return
+	}
+}
+
 // API to check if user is logged in 
 func loginCheckHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
