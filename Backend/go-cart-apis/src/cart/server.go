@@ -121,7 +121,7 @@ func (c *Client) login(key string, value Login) (Login, error) {
 	}	
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	if debug { fmt.Println("[RIAK DEBUG] PUT: " + c.Endpoint + "/buckets/cart/keys/"+key+"?returnbody=true => " + string(body)) }
+	if debug { fmt.Println("[RIAK DEBUG] PUT: " + c.Endpoint + "/buckets/login/keys/"+key+"?returnbody=true => " + string(body)) }
 	var ord = Login { }
 	if err := json.Unmarshal(body, &ord); err != nil {
 		fmt.Println("RIAK DEBUG] JSON unmarshaling failed: %s", err)
@@ -146,7 +146,7 @@ func (c *Client) logout(key string) (ErrorMessage) {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	if debug { fmt.Println("[RIAK DEBUG] GET: " + c.Endpoint + "/buckets/cart/keys/"+key +" => " + string(body)) }
+	if debug { fmt.Println("[RIAK DEBUG] GET: " + c.Endpoint + "/buckets/login/keys/"+key +" => " + string(body)) }
 	var ord = CartPayload { }
 	if err := json.Unmarshal(body, &ord); err != nil {
 		fmt.Println("RIAK DEBUG] JSON unmarshaling failed: %s", err)
@@ -221,7 +221,7 @@ func (c *Client) isLoggedIn(key string) (ErrorMessage) {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	if debug { fmt.Println("[RIAK DEBUG] GET: " + c.Endpoint + "/buckets/cart/keys/"+key +" => " + string(body)) }
+	if debug { fmt.Println("[RIAK DEBUG] GET: " + c.Endpoint + "/buckets/login/keys/"+key +" => " + string(body)) }
 	return ord_nil
 
 }
