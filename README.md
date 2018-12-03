@@ -7,34 +7,33 @@
 * Rohan Acharya
 * Drusti Thakkar
 
+## Project Journal
+* [Link to Project Journal](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Project_Journal.md)
 
 ## Project Modules
 
 - [Database](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Backend/DB%20Schema.md)
 - [Frontend](https://github.com/nguyensjsu/fa18-281-avengers/tree/master/Frontend)
 - [Backend](https://github.com/nguyensjsu/fa18-281-avengers/tree/master/Backend)
-- Infrastructure
+- [Infrastructure](https://github.com/nguyensjsu/fa18-281-avengers/raw/master/ArchitectureDiagram_finalVersion.png)
 
 
 ## Kanban Task Board
 * [Link to Task Board](https://github.com/nguyensjsu/fa18-281-avengers/projects/1)
 
-
-## Project Journal
+## Team Meetings Log
 * [Link to Weekly Team Meeting Record](https://github.com/nguyensjsu/fa18-281-avengers/tree/master/Team%20Meetings%20Log)
-
 
 ## Agile Core Values
 
 - [Eliminate Waste](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Scrum%20Values/XP_Value_Eliminating_Waste.md)
-- Feedback
-- Simplicity
 - [Communication](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Scrum%20Values/XP_Value_Communication.md)
 
 ### Architecture Diagram
 
-* [Link to Architecture Diagram](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_Diagram_FinalVersion.png)
-<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_Diagram_FinalVersion.png" width="500" height="700" />
+* [Link to Architecture Diagram](https://github.com/nguyensjsu/fa18-281-avengers/raw/master/ArchitectureDiagram_finalVersion.png)
+<img src="https://github.com/nguyensjsu/fa18-281-avengers/raw/master/ArchitectureDiagram_finalVersion.png" width="500" height="700" />
 
 * [Link to Flow Chart](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Flow_Chart.png)
+<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Flow_Chart.png" width="500" height="700" />
 
