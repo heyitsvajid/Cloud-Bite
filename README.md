@@ -2,7 +2,7 @@
 
 ## Team Members:
 * [Vajid Kagdi](https://github.com/heyitsvajid)
-* Murtaza Manasawala
+* [Murtaza Manasawala](https://github.com/murtazabeans)
 * Sricheta Ruj
 * Rohan Acharya
 * Drusti Thakkar
