@@ -20,7 +20,8 @@
         ]  
     });  
 
-</br>
+
+
 #### User Schema
 
     var UserSchema = new Schema({  
@@ -49,3 +50,27 @@
                     }  
                 ]  
     });  
+
+
+### Riak Keys
+
+    URL : GET http://10.0.1.56:8098/buckets/buckets/cart/keys 
+    Response :  
+                {
+                    "email_id": "srichetaruj@gmail.com",
+                    "tenant_id": "11111",
+                    "items": [
+                        {
+                            "name": "sricgeta",
+                            "amount": 22,
+                            "description": "pen",
+                            "image_url": "http://sss.com",
+                            "count": 1
+                        }
+                    ]
+                }
+    URL : GET http://10.0.1.56:8098/buckets/buckets/login/keys
+    Response : {
+                "email_id": "srichetaruj@gmail.com",
+                "tenant_id": "11111"
+              }
