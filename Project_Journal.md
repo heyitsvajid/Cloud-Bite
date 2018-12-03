@@ -10,51 +10,56 @@
 
 ## Architecture Diagram
 
-<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/ArchitectureDiagram_finalVersion.png" width="500" height="700" />
+<p align="center">
+<img align="center" src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/ArchitectureDiagram_finalVersion.png" width="500" height="700" />
+</p>
 
 ## Description
 
-1. Frontend - user
+### 1. Frontend - user
 
-Technology Stack: HTML, CSS, React, Redux
+```Technology Stack:``` HTML, CSS, React, Redux
 The frontend user client will be used by a user to log in to the application and the corresponding request will be cascaded to the appropriate API via Kong Gateway.
 
-2. Frontend - admin
+### 2. Frontend - admin
 
-Technology Stack: HTML, CSS, React, Redux
+```Technology Stack:``` HTML, CSS, React, Redux
 The frontend user client will be used by admin to register a new tenant in to the application and the corresponding request will be cascaded to the appropriate API via Kong Gateway.
 
-3. Kong API Gateway
+### 3. Kong API Gateway
 
-The Kong API Gateway is used to route the APIs to the corresponding elastic load balancer.
+The ```Kong API Gateway``` is used to route the APIs to the corresponding elastic load balancer.
 
-4. Load Balancers
+### 4. Load Balancers
 
-There are 3 load balancers - each for the Go APIs to scale the application horizontally.
+There are 3 ```load balancers``` - each for the Go APIs to scale the application horizontally.
 
-5. Go APIs
+### 5. Go APIs
 Tenant API service is used to add/update/delete a tenant from the datastore.
 User API service is used to add/update/delete a user from the particular tenant.
 Cart API service is used to add/update/delete items from a cart.
 
-6.  Mongo DB Sharded cluster
+### 6.  Mongo DB Sharded cluster
 
 The mongo db sharded cluster consists of a replica set of 2 config server nodes, 2 shard servers with 1 node each and 1 mongos instance as a query router. 
 
-7. Riak Cluster
+### 7. Riak Cluster
 
 The riak cluster consists of 3 nodes.
 
 # AKF Scale Cube
 
-X-axis Scaling: Horizontal duplication or x-axis scaling is to create multiple instances or clones of your application on AWS behind a load balancer.
+### X-axis Scaling: 
+- Horizontal duplication or x-axis scaling is to create multiple instances or clones of your application on AWS behind a load balancer.
 
-This has been implemented by cloning our APIs and using a load balancer.
+- This has been implemented by cloning our APIs and using a load balancer.
 
-Y-axis Scaling: Y axis scaling or functional decomposition is to separate services or dissimilar things.
+### Y-axis Scaling:
+- Y axis scaling or functional decomposition is to separate services or dissimilar things.
 
-This has been implemented by dividing all the services independently.
+- This has been implemented by dividing all the services independently.
 
-Z-axis Scaling: Z axis scaling is to decompose or splitting similar data into different chunks.
+### Z-axis Scaling:
+- Z axis scaling is to decompose or splitting similar data into different chunks.
 
-This has been implemented by using a mongodb sharded cluster to store tenant and user data.
+- This has been implemented by using a mongodb sharded cluster to store tenant and user data.
