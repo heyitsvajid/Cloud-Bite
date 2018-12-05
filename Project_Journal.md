@@ -38,6 +38,7 @@ There are 3 ```load balancers``` - each for the Go APIs to scale the application
 Tenant API service is used to add/update/delete a tenant from the datastore.
 User API service is used to add/update/delete a user from the particular tenant.
 Cart API service is used to add/update/delete items from a cart.
+Login API service is used to logout/login or check if user is logged in.
 
 ### 6.  Mongo DB Sharded cluster
 
