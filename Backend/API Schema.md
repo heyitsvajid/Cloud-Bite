@@ -100,7 +100,9 @@
     - 204 No Content
     - 404 Not Found
 
-</br>
+
+
+
 
 ### Order resource
 
@@ -142,3 +144,38 @@
     - 404 Not Found
     
 </br>
+
+### Login Resource 
+
+####    POST /login
+    POST /login HTTP/1.1
+    Accept: application/json
+
+    Body : {
+        "email_id" :"srichetaruj@gmail.com",
+        "tenant_id" :"1233"
+    }
+
+</br>
+
+####    POST /logout
+    POST /logout HTTP/1.1
+    Accept: application/json
+
+     Body : {
+        "email_id" :"srichetaruj@gmail.com",
+        "tenant_id" :"1233"
+    }
+
+<br>
+
+####    POST /logout
+    POST /logout HTTP/1.1
+    Accept: application/json
+
+     Body : {
+        "email_id" :"srichetaruj@gmail.com",
+        "tenant_id" :"1233"
+    }
+
+####    GET /isLoggedIn/{emailid_tenant}
