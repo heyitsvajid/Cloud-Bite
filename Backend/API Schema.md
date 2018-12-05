@@ -7,6 +7,7 @@
 - User
 - Tenant
 - Order
+- Cart
 
 
 ### Tenant Resource 
@@ -168,14 +169,5 @@
     }
 
 <br>
-
-####    POST /logout
-    POST /logout HTTP/1.1
-    Accept: application/json
-
-     Body : {
-        "email_id" :"srichetaruj@gmail.com",
-        "tenant_id" :"1233"
-    }
 
 ####    GET /isLoggedIn/{emailid_tenant}
