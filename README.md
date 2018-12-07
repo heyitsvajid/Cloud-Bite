@@ -5,7 +5,7 @@
 * [Murtaza Manasawala](https://github.com/murtazabeans)
 * Sricheta Ruj
 * Rohan Acharya
-* Drusti Thakkar
+* [Drusti Thakkar](https://github.com/drashti93)
 
 ## Project Journal
 * [Link to Project Journal](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Project_Journal.md)
