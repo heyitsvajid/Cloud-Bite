@@ -46,8 +46,8 @@ class SignIn extends Component {
             console.log(error)
             swal({
                 type: 'error',
-                title: 'Add Tenant',
-                text: "Error Adding tenant",
+                title: 'Page not found',
+                text: "URL does not exist! Please check the URL and try again",
             })
         });
     }
@@ -66,6 +66,10 @@ class SignIn extends Component {
             password: e.target.value,
             errorMsg: ''
         })
+    }
+
+    handleJoinButton(e){
+        window.location.href = reactURL + "signup/" + localStorage.getItem("tenant")
     }
 
     handleLogin(e) {
@@ -92,8 +96,6 @@ class SignIn extends Component {
                 })
                 return;
             }
-
-debugger
             if(userPassword == obj.state.password){
                 localStorage.setItem("email",this.state.email);
                 localStorage.setItem("tenant",this.props.match.params.tenant);
@@ -142,7 +144,7 @@ debugger
                     <div class="sb-headerCrate flex flex-column bg-white  flex-shrink-none">
                         <div class="lg-flex flex-column base___46s3P">
                             <a href="/" class="siren___qFldR block m3 lg-m4" style={{width:"125px"}}>
-                            <img src={image_url} alt="Smiley face" style={{height:'130px'}}/>
+                            <img src={image_url} alt="Smiley face" style={{width: '90px', height:'90px'}}/>
                                 <span class="hiddenVisually">{companyName} Company</span></a>
                             <div class="flex flex-grow flex-column ">
                                 <div class="container--headerCrate sb-headerCrate--content size12of12 ">
@@ -200,7 +202,7 @@ debugger
                                         <div class="base___Hvg4n bg-blackWarm container" >
                                             <div class="padding___2PNk5 mx-auto narrow___pLMqt lg-pt6 lg-pb9">
                                                 <h2 class="text-xxs text-bold text-upper mb4 color-textWhiteSoft">Join <span>{companyName}</span><span>™</span></h2>
-                                                <button class="sb-button sb-button--default sb-button--dark sb-button--rewardsGold mb4" type="button" data-e2e="joinNowButton">Join now</button>
+                                                <a href = "#" onClick = {this.handleJoinButton.bind(this)} class="sb-button sb-button--default sb-button--dark sb-button--rewardsGold mb4" type="button" data-e2e="joinNowButton">Join now</a>
                                                 <h2 class="sb-heading sb-heading--medium mb3 color-textWhite" tabindex="-1">Create an account and bring on the Order!</h2>
 
                                             </div>
