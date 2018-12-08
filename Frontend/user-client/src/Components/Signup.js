@@ -102,7 +102,7 @@ class Signup extends Component {
                     title: 'Howdy!',
                     text: "You have successfully registered! Please login for some snacks!",
                 })
-                window.location.href = userURL + this.props.match.params.tenant 
+                window.location.href = reactURL + this.props.match.params.tenant 
             })
          },(error)=>{
             var userObj = {
@@ -125,7 +125,7 @@ class Signup extends Component {
                     title: 'Howdy!',
                     text: "You have successfully registered! Please login for some snacks!",
                 })
-                window.location.href = userURL + this.props.match.params.tenant 
+                window.location.href = reactURL + this.props.match.params.tenant 
             })
             .catch(error => {
                 console.log(error)
