@@ -22,19 +22,19 @@
     Accept: application/json
     
     Body: CartPayLoad
-{
-    "email_id": "srichetaruj@gmail.com",
-    "tenant_id": "11111",
-    "items": [
-        {
-            "name": "sricgeta",
-            "amount": 22,
-            "description": "pen",
-            "image_url": "http://sss.com",
-            "count": 1
-        }
-    ]
-}
+    {
+        "email_id": "srichetaruj@gmail.com",
+        "tenant_id": "11111",
+        "items": [
+            {
+                "name": "sricgeta",
+                "amount": 22,
+                "description": "pen",
+                "image_url": "http://sss.com",
+                "count": 1
+            }
+        ]
+    }
     
     Response:
     - 201 Created
