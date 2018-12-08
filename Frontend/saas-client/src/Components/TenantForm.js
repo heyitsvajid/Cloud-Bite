@@ -3,7 +3,7 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import { withRouter } from 'react-router-dom'
 import '../assets/css/admin.css'
-import { envURL } from '../config/environment';
+import { cartURL, reactURL, userURL, tenantURL, kongURL } from '../config/environment';
 
 
 class MultiplexForm extends Component {
@@ -37,7 +37,7 @@ class MultiplexForm extends Component {
                 products: this.state.products  
             }  
             console.log("Adding Tenant : "+tenant)            
-            axios.post(envURL + 'tenant',tenant,{ headers: { 'Content-Type': 'application/json'}})
+            axios.post( tenantURL + 'tenant',tenant,{ headers: { 'Content-Type': 'application/json'}})
             .then(response => { 
                 console.log(response)
                 swal({
@@ -58,7 +58,7 @@ class MultiplexForm extends Component {
     }
 
     loadTenant() {
-        axios.get(envURL + 'tenants',{ headers: { 'Content-Type': 'application/json'}})
+        axios.get( tenantURL + 'tenants',{ headers: { 'Content-Type': 'application/json'}})
         .then((res) => {
                     console.log(res)
                     console.log('Fetching all tenant details');

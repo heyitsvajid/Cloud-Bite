@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import '../assets/css/login-css.css'
 import axios from 'axios'
 import swal from 'sweetalert2'
-import { envURL } from '../config/environment';
+import { cartURL, reactURL, userURL, tenantURL, kongURL } from '../config/environment';
 
 class Signup extends Component {
 
@@ -20,7 +20,7 @@ class Signup extends Component {
 
     componentWillMount() {
         var self = this;
-        axios.get('http://35.162.234.7:8000/' + this.props.match.params.tenant, { headers: { 'Content-Type': 'application/json'}})
+        axios.get( kongURL + this.props.match.params.tenant, { headers: { 'Content-Type': 'application/json'}})
         .then(response => { 
             console.log(response)
             this.setState({tenantObj: response.data})
@@ -70,7 +70,7 @@ class Signup extends Component {
         var self = this;
 
 
-         axios.get('http://35.162.234.7:3002/user/email/' + this.state.email , { headers: { 'Content-Type': 'application/json'}})
+         axios.get( userURL + 'user/email/' + this.state.email , { headers: { 'Content-Type': 'application/json'}})
          .then(response => { 
             var alreadyPresent = false;
             var userTenantObjects = response.data.tenants;
@@ -103,7 +103,7 @@ class Signup extends Component {
 
             response.data.tenants.push(userObj);
             
-            axios.put("http://35.162.234.7:3002/user" , response.data,{ headers: { 'Content-Type': 'application/json'}})
+            axios.put( userURL + "user" , response.data,{ headers: { 'Content-Type': 'application/json'}})
             .then(response => { 
                 console.log(response)
                 swal({
@@ -111,7 +111,7 @@ class Signup extends Component {
                     title: 'Howdy!',
                     text: "You have successfully registered! Please login for some snacks!",
                 })
-                window.location.href = "http://localhost:3002/" + this.props.match.params.tenant 
+                window.location.href = userURL + this.props.match.params.tenant 
             })
          },(error)=>{
             var userObj = {
@@ -126,7 +126,7 @@ class Signup extends Component {
                     }
                 ]
              }
-            axios.post("http://35.162.234.7:3002/user" ,userObj,{ headers: { 'Content-Type': 'application/json'}})
+            axios.post( userURL + "user" ,userObj,{ headers: { 'Content-Type': 'application/json'}})
             .then(response => { 
                 console.log(response)
                 swal({
@@ -134,7 +134,7 @@ class Signup extends Component {
                     title: 'Howdy!',
                     text: "You have successfully registered! Please login for some snacks!",
                 })
-                window.location.href = "http://localhost:3002/" + this.props.match.params.tenant 
+                window.location.href = userURL + this.props.match.params.tenant 
             })
             .catch(error => {
                 console.log(error)

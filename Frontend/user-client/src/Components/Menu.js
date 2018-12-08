@@ -11,7 +11,7 @@ import '../assets/css/style.css'
 import '../assets/css/font.css'
 import '../assets/css/menu.css'
 import $ from "jquery";
-
+import { cartURL, reactURL, userURL, tenantURL, kongURL } from '../config/environment';
 
 class Menu extends Component {
 
@@ -22,7 +22,9 @@ class Menu extends Component {
             password: '',
             isLoggedIn: false,
             errorMsg: '',
-            tenantObj:{}
+            tenantObj:{},
+            userObj: {},
+            flag: true
         };
         // this.handleUsernameChange = this.handleUsernameChange.bind(this);
         // this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -31,10 +33,49 @@ class Menu extends Component {
 
     componentWillMount() {
         var self = this;
-        axios.get('http://35.162.234.7:8000/' + this.props.match.params.tenant, { headers: { 'Content-Type': 'application/json'}})
+        
+        var email_id=localStorage.getItem("email")? localStorage.getItem("email"): ""
+        var tenant_id=localStorage.getItem("tenant")? localStorage.getItem("tenant"): ""
+         
+        axios.get( cartURL + 'isLoggedIn/' + email_id+'_'+tenant_id, { headers: { 'Content-Type': 'application/json'}})
+        .then(response => { 
+            axios.get( kongURL + this.props.match.params.tenant, { headers: { 'Content-Type': 'application/json'}})
+            .then(response => {
+                console.log(response)
+                this.setState({tenantObj: response.data})
+                axios.get( userURL 'user/email/' + localStorage.getItem("email"), { headers: { 'Content-Type': 'application/json'}})
+                .then(userResponse => { 
+                    console.log(userResponse)
+                    self.setState({userObj: userResponse.data})
+                })
+                .catch(error => {
+                    console.log(error)
+                    swal({
+                        type: 'error',
+                        title: 'Login Error',
+                        text: "Error Loading Menu",
+                    })
+                });
+            })
+            .catch(error => {
+                console.log(error)
+                swal({
+                    type: 'error',
+                    title: 'Add Tenant',
+                    text: "Error Adding tenant",
+                })
+            });
+            console.log(response)
+        },(error)=>{
+            window.location.href = userURL + this.props.match.params.tenant
+            console.log(error)
+        })
+
+        axios.get( kongURL + this.props.match.params.tenant, { headers: { 'Content-Type': 'application/json'}})
         .then(response => { 
             console.log(response)
-            this.setState({tenantObj: response.data})
+            self.setState({tenantObj: response.data})
+            
         })
         .catch(error => {
             console.log(error)
@@ -44,6 +85,25 @@ class Menu extends Component {
                 text: "Error Adding tenant",
             })
         });
+    }
+
+    handleSignOut(e){
+        e.preventDefault();
+        var obj = this;
+        var riakJson = {"email_id": localStorage.getItem("email"), "tenant_id":this.props.match.params.tenant}
+        axios.post( cartURL + 'logout', riakJson , { headers: { 'Content-Type': 'application/json'}})
+        .then(response => { 
+           obj.setState({userObj: {}})
+           window.location.href = userURL + obj.props.match.params.tenant
+        })
+        .catch(error => {
+            console.log(error)
+            swal({
+                type: 'error',
+                title: 'Login Error',
+                text: "Please try again later",
+            })
+        });   
     }
 
     render() {
@@ -56,7 +116,6 @@ class Menu extends Component {
             companyName = tenantObject.name;
             if(tenantObject.products.length > 0){
                 products = tenantObject.products.map((prod, index) => {
-                    debugger
                     return (
                         <li key={prod.name}>
                             <dl><dt><span><a href="/menu/drinks">{prod.name}</a></span></dt>
@@ -74,13 +133,12 @@ class Menu extends Component {
                     )
                 });
 
-
-            }
+            }    
             var cartWrapper = $('.cd-cart-container');
             //product id - you don't need a counter in your real project but you can use your real product id
             var productId = 0;
-            if( cartWrapper.length > 0 ) {
-                
+            if( cartWrapper.length > 0 && this.state.flag ) {
+                this.setState({flag: false})
                 //store jQuery objects
                 var cartBody = cartWrapper.find('.body')
                 var cartList = cartBody.find('ul').eq(0);
@@ -90,36 +148,36 @@ class Menu extends Component {
                 var addToCartBtn = $('.cd-add-to-cart');
                 var undo = cartWrapper.find('.undo');
                 var undoTimeoutId;
-        
+
                 //add product to cart
                 addToCartBtn.on('click', function(event){
                     event.preventDefault();
                     debugger
                     addToCart($(this));
                 });
-        
+
                 //open/close cart
                 cartTrigger.on('click', function(event){
                     event.preventDefault();
                     toggleCart();
                 });
-        
+
                 //close cart when clicking on the .cd-cart-container::before (bg layer)
                 cartWrapper.on('click', function(event){
                     if( $(event.target).is($(this)) ) toggleCart(true);
                 });
-        
+
                 //delete an item from the cart
                 cartList.on('click', '.delete-item', function(event){
                     event.preventDefault();
                     removeProduct($(event.target).parents('.product'));
                 });
-        
+
                 //update item quantity
                 cartList.on('change', 'select', function(event){
                     quickUpdateCart();
                 });
-        
+
                 //reinsert item deleted from the cart
                 undo.on('click', 'a', function(event){
                     clearInterval(undoTimeoutId);
@@ -131,7 +189,7 @@ class Menu extends Component {
                     undo.removeClass('visible');
                 });
             }
-        
+
             function toggleCart(bool) {
                 var cartIsOpen = ( typeof bool === 'undefined' ) ? cartWrapper.hasClass('cart-open') : bool;
                 
@@ -141,7 +199,7 @@ class Menu extends Component {
                     clearInterval(undoTimeoutId);
                     undo.removeClass('visible');
                     cartList.find('.deleted').remove();
-        
+
                     setTimeout(function(){
                         cartBody.scrollTop(0);
                         //check if cart empty to hide it
@@ -151,7 +209,7 @@ class Menu extends Component {
                     cartWrapper.addClass('cart-open');
                 }
             }
-        
+
             function addToCart(trigger) {
                 var cartIsEmpty = cartWrapper.hasClass('empty');
                 //update cart product list
@@ -163,7 +221,7 @@ class Menu extends Component {
                 //show cart
                 cartWrapper.removeClass('empty');
             }
-        
+
             function addProduct(name, image, price) {
                 //this is just a product placeholder
                 //you should insert an item with the selected product info
@@ -173,7 +231,7 @@ class Menu extends Component {
                 var productAdded = $("<li class='product'><div class='product-image'><a href='#0'><img src='"+image+"' alt='placeholder'></a></div><div class='product-details'><h3><a href='#0'>"+name+"</a></h3><span class='price'>$"+parseFloat(price)+"</span><div class='actions'><a href='#0' class='delete-item'>Delete</a><div class='quantity'><label for='cd-product-"+ productId +"'>Qty</label><span class='select'><select id='cd-product-"+ productId +"' name='quantity'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option></select></span></div></div></div></li>");
                 cartList.prepend(productAdded);
             }
-        
+
             function removeProduct(product) {
                 clearInterval(undoTimeoutId);
                 cartList.find('.deleted').remove();
@@ -183,19 +241,19 @@ class Menu extends Component {
                     productTotPrice = Number(product.find('.price').text().replace('$', '')) * productQuantity;
                 
                 product.css('top', topPosition+'px').addClass('deleted');
-        
+
                 //update items count + total price
                 updateCartTotal(productTotPrice, false);
                 updateCartCount(true, -productQuantity);
                 undo.addClass('visible');
-        
+
                 //wait 8sec before completely remove the item
                 undoTimeoutId = setTimeout(function(){
                     undo.removeClass('visible');
                     cartList.find('.deleted').remove();
                 }, 8000);
             }
-        
+
             function quickUpdateCart() {
                 var quantity = 0;
                 var price = 0;
@@ -205,12 +263,12 @@ class Menu extends Component {
                     quantity = quantity + singleQuantity;
                     price = price + singleQuantity*Number($(this).find('.price').text().replace('$', ''));
                 });
-        
+
                 cartTotal.text(price.toFixed(2));
                 cartCount.find('li').eq(0).text(quantity);
                 cartCount.find('li').eq(1).text(quantity+1);
             }
-        
+
             function updateCartCount(emptyCart, quantity) {
                 if( typeof quantity === 'undefined' ) {
                     var actual = Number(cartCount.find('li').eq(0).text()) + 1;
@@ -221,15 +279,15 @@ class Menu extends Component {
                         cartCount.find('li').eq(1).text(next);
                     } else {
                         cartCount.addClass('update-count');
-        
+
                         setTimeout(function() {
                             cartCount.find('li').eq(0).text(actual);
                         }, 150);
-        
+
                         setTimeout(function() {
                             cartCount.removeClass('update-count');
                         }, 200);
-        
+
                         setTimeout(function() {
                             cartCount.find('li').eq(1).text(next);
                         }, 230);
@@ -242,11 +300,10 @@ class Menu extends Component {
                     cartCount.find('li').eq(1).text(next);
                 }
             }
-        
+
             function updateCartTotal(price, bool) {
                 bool ? cartTotal.text( (Number(cartTotal.text()) + Number(price)).toFixed(2) )  : cartTotal.text( (Number(cartTotal.text()) - Number(price)).toFixed(2) );
-            }
-            
+            }        
         }
         
         return (
@@ -276,7 +333,7 @@ class Menu extends Component {
                                           <a href="/store-locator"><span aria-hidden="true" data-icon=""></span><span class="hidden_visually med_render_visually">Find a Store</span></a>
                                       </li> */}
 
-                                      <li class="utility_link signin"><a href="/account/signin" id="signIn">Sign Out</a></li>
+                                      <li class="utility_link signin"><a href="#" onClick={this.handleSignOut.bind(this)} id="signIn">Sign Out</a></li>
 
                                   </ul>
                               </div>

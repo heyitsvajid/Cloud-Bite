@@ -5,9 +5,10 @@
 // var reactURL= 'http://localhost:3006/'
 
 var cartURL= 'http://localhost:3006/'
-var tenantURL= 'http://http://tenant-lb-1590441743.us-west-1.elb.amazonaws.com//'
+var tenantURL= 'http://tenant-lb-1590441743.us-west-1.elb.amazonaws.com/'
 var userURL = 'http://userLoadbalancer-1448241959.us-west-1.elb.amazonaws.com/'
 var reactURL= 'http://localhost:3006/'
+var kongURL= 'http://52.10.253.54:8000/'
 
 
 //EC2 Instance
@@ -20,6 +21,7 @@ export{
 cartURL,
 reactURL,
 userURL,
-tenantURL
+tenantURL,
+kongURL
 }
 
