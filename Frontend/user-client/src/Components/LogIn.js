@@ -69,7 +69,7 @@ class SignIn extends Component {
     }
 
     handleJoinButton(e){
-        window.location.href = reactURL + "signup/" + localStorage.getItem("tenant")
+        window.location.href = reactURL + "signup/" + this.props.match.params.tenant
     }
 
     handleLogin(e) {
