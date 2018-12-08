@@ -45,6 +45,8 @@ class MultiplexForm extends Component {
                     title: 'Add Tenant',
                     text: "Tenant added successfully",
                 })
+                setTimeout(function(){ window.location.reload(); }, 2000);
+                
             })
             .catch(error => {
                 console.log(error)
@@ -137,7 +139,7 @@ class MultiplexForm extends Component {
         debugger
         console.log("Updated Details")
         console.log(tenant)
-        axios.put(envURL + 'tenant',tenant,{ headers: { 'Content-Type': 'application/json'}})
+        axios.put(tenantURL + 'tenant',tenant,{ headers: { 'Content-Type': 'application/json'}})
             .then(response => { 
                 console.log(response)
                 swal({
@@ -145,6 +147,8 @@ class MultiplexForm extends Component {
                     title: 'Add Tenant',
                     text: "Tenant updated successfully",
                 })
+                setTimeout(function(){ window.location.reload(); }, 2000);
+
             })
             .catch(error => {
                 console.log(error)

@@ -24,8 +24,6 @@ var mongodb_server = "mongodb://admin:saas@35.175.57.209:27017/saas"
 var mongodb_database = "saas"
 var mongodb_collection = "tenant"
 
-
-
 // NewServer configures and returns a Server.
 func NewServer() *negroni.Negroni {
 	formatter := render.New(render.Options{
@@ -172,7 +170,7 @@ func tenantUpdateHandler(formatter *render.Render) http.HandlerFunc {
         c := session.DB(mongodb_database).C(mongodb_collection)
         query := bson.M{"id" : m.ID}
         change := bson.M{"$set": bson.M{ "products" : m.Products}}
-        err = c.Update(query, change)
+        _,err = c.UpdateAll(query, change)
         if err != nil {
                 log.Fatal(err)
         }
@@ -221,10 +219,10 @@ func tenantNewEntryHandler(formatter *render.Render) http.HandlerFunc {
 		formatter.JSON(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	url := "http://35.162.234.7:8001/apis"
+	url := "http://52.10.253.54:8001/apis"
 
 	text := strings.ToLower(strings.Replace(tenant.Name, " ", "", -1));
-	payload := strings.NewReader("name="+text+"&request_path=/"+text+"&strip_request_path=true&preserve_host=true&upstream_url=http://35.162.234.7:3000/tenant/"+uuid.String())
+	payload := strings.NewReader("name="+text+"&request_path=/"+text+"&strip_request_path=true&preserve_host=true&upstream_url=http://tenant-lb-1590441743.us-west-1.elb.amazonaws.com/tenant/"+uuid.String())
 	fmt.Println(text);
 	
 	request, _ := http.NewRequest("POST", url, payload)
