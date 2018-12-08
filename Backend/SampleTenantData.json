@@ -1,0 +1,67 @@
+//Sandwich
+
+
+[
+    {
+        "id": "",
+        "name": "Sandwich Joint",
+        "image_url": "https://previews.123rf.com/images/squarelogo/squarelogo1207/squarelogo120700033/14651203-vintage-sandwich-menu-stamp.jpg",
+        "products": [
+            {
+                "name": "French Dip Sandwich",
+                "amount": "6",
+                "description": " A French Dip Sandwich is a hot beef sandwich consisting of tender thin slices of beef layered a long white French roll that is dipped into a flavorful sauce made from the pan juices.",
+                "image_url": "https://s3-us-east-2.amazonaws.com/thesaltymarshmallow/wp-content/uploads/2017/09/18082116/instant-pot-french-dips.jpg"
+            },
+            {
+                "name": "Cheesesteak Sandwich",
+                "amount": "2",
+                "description": "A cheesesteak (also known as a Philadelphia cheesesteak, Philly cheesesteak, cheesesteak sandwich, cheese steak, or steak and cheese) is a sandwich made from thinly sliced pieces of beefsteak and melted cheese in a long hoagie roll.",
+                "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Cheesesteak_heaven.jpg/1024px-Cheesesteak_heaven.jpg"
+            }, 
+            {
+                "name": "Chicken Sandwich",
+                "amount": "9",
+                "description": "In North America, a chicken sandwich is a sandwich which typically consists of a boneless, skinless breast of chicken served between slices of bread, on a bun, or on a roll.",
+                "image_url": "https://pinchofyum.com/wp-content/uploads/The-Best-Fried-Chicken-Sandwich.jpg"
+            },
+            {
+                "name": "Roast Beef Sandwich",
+                "amount": "10",
+                "description": "The roast beef sandwich is a sandwich that is made out of sliced roast beef or sometimes beef loaf. It is sold at many diners in the United States, as well as fast food chains, such as Arby's and Roy Rogers Restaurants.Roast beef sandwiches may be served cold or hot, and are sometimes served open faced.",
+                "image_url": "https://www.themediterraneandish.com/wp-content/uploads/2015/03/Roast-Beef-Sandwich-11.jpg"
+            },
+            {
+                "name": "Submarine Sandwich",
+                "amount": "8",
+                "description": "A submarine sandwich, also known as a sub, hoagie, hero, grinder, po'boy or Italian sandwich, is the name given in the United States to a type of sandwich that consists of a length of bread or roll split crosswise and filled with a variety of meats, cheeses, vegetables, and condiments.",
+                "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Hoagie_Hero_Sub_Sandwich.jpg"
+            },
+             {
+                "name": "Bologna Sandwich",
+                "amount": "2",
+                "description": "The bologna sandwich is a sandwich common in the United States and Canada. Also known as a baloney sandwich, it is traditionally made from sliced bologna sausage between slices of white bread, along with various condiments, such as mayonnaise, mustard, and ketchup.",
+                "image_url": "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2015/7/21/2/RO0102H_Carl-Johns-Fried-Bologna-Sandwich_s4x3.jpg.rend.hgtvcom.826.620.suffix/1437511817800.jpeg"
+            },
+            {
+                "name": "Barbecue Sandwich",
+                "amount": "4",
+                "description": "A barbecue sandwich is a sandwich that is typically prepared with barbecued meats. Several types of meats are used to prepare barbecue sandwiches. Some varieties use cooked meats that are not barbecued, but include barbecue sauce.",
+                "image_url": "https://cdn.cpnscdn.com/static.coupons.com/ext/kitchme/images/recipes/600x400/instant-pot-barbecue-pulled-pork-sandwiches_52461.jpg"
+            },
+            {
+                "name": "Dagwood Sandwich",
+                "amount": "6",
+                "description": "A Dagwood sandwich is a tall, multi-layered sandwich made with a variety of meats, cheeses, and condiments. It was named after Dagwood Bumstead, a central character in the comic strip Blondie, who is frequently illustrated making enormous sandwiches.",
+                "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Dagwood_sandwich.jpg/220px-Dagwood_sandwich.jpg"
+            },
+            {
+                "name": "Cheese Sandwich",
+                "amount": "1",
+                "description": "A cheese sandwich is a basic sandwich generally made with one or more varieties of cheese on any sort of bread, such as flat bread or wheat bread, that may include spreads such as butter or mayonnaise.",
+                "image_url": "https://www.wikihow.com/images/thumb/8/8b/Make-a-Cheese-Sandwich-Step-21.jpg/aid937122-v4-728px-Make-a-Cheese-Sandwich-Step-21.jpg.webp"
+            },
+
+            ]
+    }
+]
