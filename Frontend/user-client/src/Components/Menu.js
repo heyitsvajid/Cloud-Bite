@@ -304,6 +304,7 @@ class Menu extends Component {
                 //delete an item from the cart
                 cartList.on('click', '.delete-item', function(event){
                     event.preventDefault();
+                    event.stopPropagation();
                     removeProduct($(event.target).parents('.product'));
                 });
 
@@ -376,16 +377,16 @@ class Menu extends Component {
                 
                 product.css('top', topPosition+'px').addClass('deleted');
 
-                //update items count + total price
-                updateCartTotal(productTotPrice, false);
-                updateCartCount(true, -productQuantity);
-                undo.addClass('visible');
+                // //update items count + total price
+                // updateCartTotal(productTotPrice, false);
+                // updateCartCount(true, -productQuantity);
+                // undo.addClass('visible');
 
                 //wait 8sec before completely remove the item
-                undoTimeoutId = setTimeout(function(){
+               /* undoTimeoutId = setTimeout(function(){
                     undo.removeClass('visible');
                     cartList.find('.deleted').remove();
-                }, 8000);
+                }, 8000);*/
             }
 
             function quickUpdateCart() {
