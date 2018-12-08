@@ -1,7 +1,12 @@
 
 
 //Local
-var envURL = 'http://localhost:3000/'
+// var envURL = 'http://localhost:3000/'
+// var reactURL= 'http://localhost:3006/'
+
+var cartURL= 'http://localhost:3006/'
+var tenantURL= 'http://http://tenant-lb-1590441743.us-west-1.elb.amazonaws.com//'
+var userURL = 'http://userLoadbalancer-1448241959.us-west-1.elb.amazonaws.com/'
 var reactURL= 'http://localhost:3006/'
 
 
@@ -12,7 +17,9 @@ var reactURL= 'http://localhost:3006/'
 
 
 export{
-envURL,
-reactURL
+cartURL,
+reactURL,
+userURL,
+tenantURL
 }
 
