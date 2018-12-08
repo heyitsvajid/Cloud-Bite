@@ -67,7 +67,6 @@ class Signup extends Component {
             var alreadyPresent = false;
             var userTenantObjects = response.data.tenants;
             userTenantObjects.forEach(object => {
-                debugger
                 if(object["tenant_id"] == self.state.tenantObj.id){
                     alreadyPresent = true;
                     swal({
@@ -103,7 +102,7 @@ class Signup extends Component {
                     title: 'Howdy!',
                     text: "You have successfully registered! Please login for some snacks!",
                 })
-                window.location.href = userURL + this.props.match.params.tenant 
+                window.location.href = reactURL + this.props.match.params.tenant 
             })
          },(error)=>{
             var userObj = {
@@ -126,19 +125,23 @@ class Signup extends Component {
                     title: 'Howdy!',
                     text: "You have successfully registered! Please login for some snacks!",
                 })
-                window.location.href = userURL + this.props.match.params.tenant 
+                window.location.href = reactURL + this.props.match.params.tenant 
             })
             .catch(error => {
                 console.log(error)
                 swal({
                     type: 'error',
-                    title: 'Add Tenant',
-                    text: "Error Adding tenant",
+                    title: 'Sign Up!',
+                    text: "Error in joining the website! Please try again later!",
                 })
 
                 });
 
          })
+    }
+
+    handleJoinButton(e){
+        window.location.href = reactURL + localStorage.getItem("tenant");
     }
 
 
@@ -156,7 +159,7 @@ class Signup extends Component {
                     <div class="sb-headerCrate flex flex-column bg-white  flex-shrink-none">
                         <div class="lg-flex flex-column base___46s3P">
                             <a href="/" class="siren___qFldR block m3 lg-m4">
-                                <img src={image_url} alt="Smiley face" style={{height:'130px'}}/>
+                            <img src={image_url} alt="Smiley face" style={{width: '90px', height:'90px'}}/>
                                 <span class="hiddenVisually">{companyName} Company</span></a>
                             <div class="flex flex-grow flex-column ">
                                 <div class="container--headerCrate sb-headerCrate--content size12of12 ">
@@ -213,7 +216,7 @@ class Signup extends Component {
                                         <div class="base___Hvg4n bg-blackWarm container" >
                                             <div class="padding___2PNk5 mx-auto narrow___pLMqt lg-pt6 lg-pb9">
                                                 <h2 class="text-xxs text-bold text-upper mb4 color-textWhiteSoft">Join <span>{companyName} Rewards</span><span>™</span></h2>
-                                                <button class="sb-button sb-button--default sb-button--dark sb-button--rewardsGold mb4" type="button" data-e2e="joinNowButton">Join now</button>
+                                                <a href = "#" onClick = {this.handleJoinButton.bind(this)} class="sb-button sb-button--default sb-button--dark sb-button--rewardsGold mb4" type="button" data-e2e="joinNowButton">Sign In</a>
                                                 <h2 class="sb-heading sb-heading--medium mb3 color-textWhite" tabindex="-1">Create an account and bring on the Rewards!</h2>
                                             </div>
                                         </div>

@@ -108,7 +108,7 @@ class Menu extends Component {
                 }
             ]
         }
-        
+
         axios.put( userURL + "user" , userObj,{ headers: { 'Content-Type': 'application/json'}})
         .then(response => { 
             console.log(response)
@@ -124,10 +124,10 @@ class Menu extends Component {
             console.log(error)
             swal({
                 type: 'error',
-                title: 'Add Tenant',
-                text: "Error Adding tenant",
+                title: 'Oops!',
+                text: "Error placing order! Please try again later",
             })
-            });
+        });
     }
 
 
@@ -196,8 +196,8 @@ class Menu extends Component {
                 console.log(error)
                 swal({
                     type: 'error',
-                    title: 'Add Tenant',
-                    text: "Error Adding tenant",
+                    title: 'Login error',
+                    text: "You are not logged in!",
                 })
             });
             console.log(response)
@@ -216,8 +216,8 @@ class Menu extends Component {
             console.log(error)
             swal({
                 type: 'error',
-                title: 'Add Tenant',
-                text: "Error Adding tenant",
+                title: 'Oops!',
+                text: "Tenant not found",
             })
         });
     }
