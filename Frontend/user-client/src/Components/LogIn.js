@@ -30,7 +30,7 @@ class SignIn extends Component {
         axios.get( cartURL + 'isLoggedIn/' + email_id+'_'+tenant_id, { headers: { 'Content-Type': 'application/json'}})
         .then(response => { 
             console.log(response)
-            window.location.href =  userURL + "menu/" + this.props.match.params.tenant
+            window.location.href =  reactURL + "menu/" + this.props.match.params.tenant
         },(error)=>{
             console.log(error)
         })

@@ -51,7 +51,7 @@ class Menu extends Component {
                 title: 'Post Cart',
                 text: "Please try again later",
             })
-        }); 
+        });
     }
 
     handleDeleteCart(e){
@@ -63,15 +63,71 @@ class Menu extends Component {
         axios.delete( cartURL + 'cart/'+ key , { headers: { 'Content-Type': 'application/json'}})
         .then(response => { 
            obj.setState({cartObj: response.data})
+           setTimeout(function(){ window.location.reload(); }, 2000);
+        })
+        .catch(error => {
+            obj.setState({cartObj: {}})
+            console.log(error)
+        }); 
+    }
+
+    handleCheckout(e){
+        var username = "";
+        var password = ""
+        var orders = [];
+        this.state.userObj.tenants.forEach(object => {
+            if(object.tenant_id == this.state.tenantObj.id){
+                username = object.user_name;
+                password = object.password;
+                orders = object.orders;
+            }
+        });
+        var newItems = []
+        this.state.cartObj.items.forEach(cart => {
+            newItems.push(cart);
+        });
+
+
+        var newOrder = {
+            "order_id": "",
+            "items": newItems
+        }
+
+        orders.push(newOrder);
+
+        var userObj = {
+            "email": localStorage.getItem("email"),
+            "id": this.state.userObj.id,
+            "tenants": [
+                {
+                    "user_name": username,
+                    "tenant_name": this.state.tenantObj.name,
+                    "tenant_id": this.state.tenantObj.id,
+                    "password": password,
+                    "orders": orders
+                }
+            ]
+        }
+        
+        axios.put( userURL + "user" , userObj,{ headers: { 'Content-Type': 'application/json'}})
+        .then(response => { 
+            console.log(response)
+            swal({
+                type: 'success',
+                title: 'Howdy!',
+                text: "You have successfully placed your order!",
+            }) 
+
+            this.handleDeleteCart(e);
         })
         .catch(error => {
             console.log(error)
             swal({
                 type: 'error',
-                title: 'Delete Cart',
-                text: "Please try again later",
+                title: 'Add Tenant',
+                text: "Error Adding tenant",
             })
-        }); 
+            });
     }
 
 
@@ -79,7 +135,7 @@ class Menu extends Component {
         var self = this;
         var email_id=localStorage.getItem("email")? localStorage.getItem("email"): ""
         var tenant_id=localStorage.getItem("tenant")? localStorage.getItem("tenant"): ""
-        
+
         axios.get( cartURL + 'cart/' + email_id+'_'+tenant_id , { headers: { 'Content-Type': 'application/json'}})
         .then(response => {
             this.setState({cartObj: response.data})
@@ -101,7 +157,9 @@ class Menu extends Component {
                 document.getElementsByClassName("cd-cart-trigger");
                 var btn = document.getElementById("checkoutBtn");
                 var em = document.createElement('em');
-                em.innerHTML = 'Checkout - $<span>'+ amount +'</span>'                
+                em.innerHTML = 'Checkout - $<span>'+ amount +'</span>'
+                btn.removeChild(btn.children[0]);
+                btn.appendChild(em);                
 
             }
         },(error)=>{
@@ -114,7 +172,6 @@ class Menu extends Component {
         var self = this;
         var email_id=localStorage.getItem("email")? localStorage.getItem("email"): ""
         var tenant_id=localStorage.getItem("tenant")? localStorage.getItem("tenant"): ""
-         
         axios.get( cartURL + 'isLoggedIn/' + email_id+'_'+tenant_id, { headers: { 'Content-Type': 'application/json'}})
         .then(response => { 
             axios.get( kongURL + this.props.match.params.tenant, { headers: { 'Content-Type': 'application/json'}})
@@ -145,7 +202,7 @@ class Menu extends Component {
             });
             console.log(response)
         },(error)=>{
-            window.location.href = userURL + this.props.match.params.tenant
+            window.location.href = reactURL + this.props.match.params.tenant
             console.log(error)
         })
 
@@ -172,7 +229,7 @@ class Menu extends Component {
         axios.post( cartURL + 'logout', riakJson , { headers: { 'Content-Type': 'application/json'}})
         .then(response => { 
            obj.setState({userObj: {}})
-           window.location.href = userURL + obj.props.match.params.tenant
+           window.location.href = reactURL + obj.props.match.params.tenant
         })
         .catch(error => {
             console.log(error)
@@ -461,7 +518,7 @@ class Menu extends Component {
 
           
           <div class="cd-cart-container">
-            <a href="#0" class="cd-cart-trigger">
+            <a style = {{backgroundColor: 'white'}} href="#0" class="cd-cart-trigger">
                 Cart
                 <ul class="count">
                     <li>0</li>
@@ -483,7 +540,7 @@ class Menu extends Component {
                     </div>
 
                     <footer>
-                        <a href="#0" id="checkoutBtn" class="checkout btn"><em>Checkout - $<span>0</span></em></a>
+                        <a onClick={this.handleCheckout.bind(this)} href="#0" id="checkoutBtn" class="checkout btn"><em>Checkout - $<span>0</span></em></a>
                     </footer>
                 </div>
             </div> 
