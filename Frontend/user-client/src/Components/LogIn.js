@@ -93,15 +93,15 @@ class SignIn extends Component {
                 return;
             }
 
-
+debugger
             if(userPassword == obj.state.password){
                 localStorage.setItem("email",this.state.email);
                 localStorage.setItem("tenant",this.props.match.params.tenant);
                 var riakJson = {"email_id": this.state.email, "tenant_id":this.props.match.params.tenant}
-                axios.post( userURL + 'login', riakJson , { headers: { 'Content-Type': 'application/json'}})
+                axios.post( cartURL + 'login', riakJson , { headers: { 'Content-Type': 'application/json'}})
                 .then(response => { 
                      console.log(response);
-                     window.location.href = userURL + "menu/" + this.props.match.params.tenant
+                     window.location.href = reactURL + "menu/" + this.props.match.params.tenant
                     },(error)=>{
                         console.log(error)
                     })

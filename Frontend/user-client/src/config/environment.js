@@ -4,10 +4,10 @@
 // var envURL = 'http://localhost:3000/'
 // var reactURL= 'http://localhost:3006/'
 
-var cartURL= 'http://localhost:3006/'
+var cartURL= 'http://Cart-LB-762479893.us-west-2.elb.amazonaws.com/'
 var tenantURL= 'http://tenant-lb-1590441743.us-west-1.elb.amazonaws.com/'
 var userURL = 'http://userLoadbalancer-1448241959.us-west-1.elb.amazonaws.com/'
-var reactURL= 'http://localhost:3006/'
+var reactURL= 'http://localhost:3000/'
 var kongURL= 'http://52.10.253.54:8000/'
 
 
