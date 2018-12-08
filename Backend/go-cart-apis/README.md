@@ -12,8 +12,6 @@
 <img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Architecture_BurgerOrderSytem.png" width="600" height="400" />
 
 
-
-
 ### Order resource
 
 ####    POST /cart
@@ -76,3 +74,29 @@
     - 404 Not Found
     
 </br>
+
+### Login Resource
+
+####    POST /login
+    POST /login HTTP/1.1
+    Accept: application/json
+
+    Body : {
+        "email_id" :"srichetaruj@gmail.com",
+        "tenant_id" :"1233"
+    }
+
+</br>
+
+####    POST /logout
+    POST /logout HTTP/1.1
+    Accept: application/json
+
+     Body : {
+        "email_id" :"srichetaruj@gmail.com",
+        "tenant_id" :"1233"
+    }
+
+<br>
+
+####    GET /isLoggedIn/{emailid_tenant}
