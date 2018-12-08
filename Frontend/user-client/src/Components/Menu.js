@@ -43,7 +43,7 @@ class Menu extends Component {
             .then(response => {
                 console.log(response)
                 this.setState({tenantObj: response.data})
-                axios.get( userURL 'user/email/' + localStorage.getItem("email"), { headers: { 'Content-Type': 'application/json'}})
+                axios.get( userURL + 'user/email/' + localStorage.getItem("email"), { headers: { 'Content-Type': 'application/json'}})
                 .then(userResponse => { 
                     console.log(userResponse)
                     self.setState({userObj: userResponse.data})
@@ -86,6 +86,10 @@ class Menu extends Component {
             })
         });
     }
+
+
+
+
 
     handleSignOut(e){
         e.preventDefault();
