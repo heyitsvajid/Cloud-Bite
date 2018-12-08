@@ -11,7 +11,7 @@
 ## Architecture Diagram
 
 <p align="center">
-<img align="center" src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/ArchitectureDiagram_finalVersion.png" width="500" height="700" />
+<img align="center" src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Final%20Architecture%20Diagram.jpg" width="500" height="700" />
 </p>
 
 ## Description
