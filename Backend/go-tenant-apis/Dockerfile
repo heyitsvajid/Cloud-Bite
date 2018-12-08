@@ -4,5 +4,6 @@ RUN mkdir /app
 ADD . /app/ 
 WORKDIR /app 
 ENV GOPATH /app
+RUN cd /app ; go get tenant
 RUN cd /app ; go install tenant
 CMD ["/app/bin/tenant"]
