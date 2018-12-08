@@ -32,7 +32,15 @@ class Menu extends Component {
     handleAddToCart(e){
         e.preventDefault();
         var obj = this;
-        axios.post( cartURL + 'cart', this.state.cartObj , { headers: { 'Content-Type': 'application/json'}})
+        var itemObj = Object.keys(this.state.cartObj).length == 0 ? [] : this.state.cartObj["items"];
+        itemObj.push({"name": e.target.dataset.name, "amount": parseInt(e.target.dataset.price), "image_url": e.target.dataset.url, "count":  1, "description":e.target.dataset.description})
+        var newObj = {
+            "email_id": localStorage.getItem("email"),
+            "tenant_id": localStorage.getItem("tenant"),
+            "items":  itemObj
+        }
+
+        axios.post( cartURL + 'cart', newObj , { headers: { 'Content-Type': 'application/json'}})
         .then(response => { 
            obj.setState({cartObj: response.data})
         })
@@ -68,40 +76,42 @@ class Menu extends Component {
 
 
     componentDidMount(){
-        var cartObj = this.state.cartObj;
-        if(Object.keys(cartObj).length!=0){
-            var items = cartObj["items"];
-            document.getElementsByClassName("cd-cart-trigger")[0].childNodes[1].childNodes[0].innerHTML = items.length;
-            document.getElementsByClassName("cd-cart-trigger")[0].childNodes[1].childNodes[1].innerHTML = items.length+1;
+        var self = this;
+        var email_id=localStorage.getItem("email")? localStorage.getItem("email"): ""
+        var tenant_id=localStorage.getItem("tenant")? localStorage.getItem("tenant"): ""
+        
+        axios.get( cartURL + 'cart/' + email_id+'_'+tenant_id , { headers: { 'Content-Type': 'application/json'}})
+        .then(response => {
+            this.setState({cartObj: response.data})
+            var cartObj = response.data
+            if(Object.keys(cartObj).length!=0){
+                var items = cartObj["items"];
+                document.getElementsByClassName("cd-cart-trigger")[0].childNodes[1].childNodes[0].innerHTML = items.length;
+                document.getElementsByClassName("cd-cart-trigger")[0].childNodes[1].childNodes[1].innerHTML = items.length+1;;
+                var ul = document.getElementsByClassName("productList")
+                var amount = 0;
+                items.forEach(item => {
+                    var li = document.createElement('li');
+                    li.className = "product";
+                    li.innerHTML = "<div class='product-image'><a href='#0'><img style='height:90px;width:90px' src='"+ item.image_url  +"' alt='placeholder'></a></div><div class='product-details'><h3><a class= 'productName' style='margin-top:-2px' href='#0'>"+ item.name +"</a></h3><span class='price'>$"+ item.amount +"</span><div class='actions'><a href='#0' class='delete-item'>Delete</a><div class='quantity'><label for='cd-product-3'>Qty</label><span class='select'><select id='cd-product-3' name='quantity'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option></select></span></div></div></div>"
+                    amount += item.amount;
+                    ul[0].appendChild(li);
+                });
 
-            var itemCart = "";
-            var ul = document.getElementsByClassName("productList")
-            var amount = 0;
-            items.forEach(item => {
+                document.getElementsByClassName("cd-cart-trigger");
+                var btn = document.getElementById("checkoutBtn");
+                var em = document.createElement('em');
+                em.innerHTML = 'Checkout - $<span>'+ amount +'</span>'                
 
-                // var str = "<li class='product'><div class='product-image'><a href='#0'><img src='https://codyhouse.co/demo/add-to-cart-interaction/img/product-preview.png' alt='placeholder'></a></div><div class='product-details'><h3><a href='#0'>Product Name</a></h3><span class='price'>$25.99</span><div class='actions'><a href='#0' class='delete-item'>Delete</a><div class='quantity'><label for='cd-product-3'>Qty</label><span class='select'><select id='cd-product-3' name='quantity'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option></select></span></div></div></div></li>';
-                // "name": "sricgeta", "amount": 22, "description": "pen", "image_url": "https://www.pizzahut.com/assets/w/images/homepage_deal/PH_$5_Lineup_Sidekick_1314x714_updated.jpg", "count": 1 }
-                var li = document.createElement('li');
-                li.className = "product";
-                li.innerHTML = "<div class='product-image'><a href='#0'><img style='height:90px;width:90px' src='"+ item.image_url  +"' alt='placeholder'></a></div><div class='product-details'><h3><a class= 'productName' style='margin-top:-2px' href='#0'>"+ item.name +"</a></h3><span class='price'>$"+ item.amount +"</span><div class='actions'><a href='#0' class='delete-item'>Delete</a><div class='quantity'><label for='cd-product-3'>Qty</label><span class='select'><select id='cd-product-3' name='quantity'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option></select></span></div></div></div>"
-                amount += item.amount;
-                ul[0].appendChild(li);
-            });
-
-            document.getElementsByClassName("cd-cart-trigger");
-            var btn = document.getElementById("checkoutBtn");
-            debugger
-            var em = document.createElement('em');
-            em.innerHTML = 'Checkout - $<span>'+ amount +'</span>'
-            
-
-        }
+            }
+        },(error)=>{
+            console.log(error)
+        })
 
     }
 
     componentWillMount() {
         var self = this;
-        // this.setState({cartObj: { "email_id": "srichetaruj@gmail.com", "tenant_id": "11111", "items": [ { "name": "sricgeta", "amount": 22, "description": "pen", "image_url": "https://www.pizzahut.com/assets/w/images/homepage_deal/PH_$5_Lineup_Sidekick_1314x714_updated.jpg", "count": 1 } ] }})
         var email_id=localStorage.getItem("email")? localStorage.getItem("email"): ""
         var tenant_id=localStorage.getItem("tenant")? localStorage.getItem("tenant"): ""
          
@@ -153,18 +163,7 @@ class Menu extends Component {
                 text: "Error Adding tenant",
             })
         });
-
-        axios.get( cartURL + 'cart/' + email_id+'_'+tenant_id , { headers: { 'Content-Type': 'application/json'}})
-        .then(response => {
-            this.setState({cartObj: response.data})
-        },(error)=>{
-            console.log(error)
-        })
     }
-
-
-
-
 
     handleSignOut(e){
         e.preventDefault();
@@ -189,7 +188,6 @@ class Menu extends Component {
         var image_url = "";
         var companyName = "";
         var products = [];
-        var hello = "jskdhfdsjf";
         if(Object.keys(this.state.tenantObj).length!=0){
             var tenantObject = this.state.tenantObj;
             image_url = tenantObject.image;
@@ -200,12 +198,11 @@ class Menu extends Component {
                         <li key={prod.name}>
                             <dl><dt><span><a href="/menu/drinks">{prod.name}</a></span></dt>
                                 <dd class="image">
-                                    <a href="/menu/drinks"><img src={prod.image} alt="" /></a>
+                                    <a href="/menu/drinks"><img style = {{height:'300px', width: '400px'}} src={prod.image} alt="" /></a>
                                 </dd>
                                 <dd>
                                     <p>{prod.description}</p>
-                                    
-                                    <p><a href="#0" class="cd-add-to-cart" data-name={prod.name} data-url={prod.image} data-price={prod.amount}>Add To Cart - ${prod.amount}</a></p>
+                                    <p><a href="#0" onClick={this.handleAddToCart.bind(this)} class="cd-add-to-cart" data-description={prod.description} data-name={prod.name} data-url={prod.image} data-price={prod.amount}>Add To Cart - ${prod.amount}</a></p>
                                 </dd>
                             </dl>
                         </li>
@@ -215,12 +212,12 @@ class Menu extends Component {
 
             }
             var cartWrapper = $('.cd-cart-container');
-            debugger
             //product id - you don't need a counter in your real project but you can use your real product id
             var productId = 0;
-            if(  this.state.flag ) {
-                this.setState({flag: false})
-                //store jQuery objects
+            if(  cartWrapper.length > 0 && this.state.flag ) {
+                if(document.getElementsByClassName("blocks")[0].childNodes.length > 0){
+                    this.setState({flag: false})
+                }
                 var cartBody = cartWrapper.find('.body')
                 var cartList = cartBody.find('ul').eq(0);
                 var cartTotal = cartWrapper.find('.checkout').find('span');
@@ -232,7 +229,6 @@ class Menu extends Component {
 
                 //add product to cart
                 addToCartBtn.on('click', function(event){
-                    alert(1);
                     event.preventDefault();
                     addToCart($(this));
                 });
@@ -309,7 +305,7 @@ class Menu extends Component {
                 //replace productId, productName, price and url with your real product info
                 productId = productId + 1;                
                 
-                var productAdded = $("<li class='product'><div class='product-image'><a href='#0'><img src='"+image+"' alt='placeholder'></a></div><div class='product-details'><h3><a href='#0'>"+name+"</a></h3><span class='price'>$"+parseFloat(price)+"</span><div class='actions'><a href='#0' class='delete-item'>Delete</a><div class='quantity'><label for='cd-product-"+ productId +"'>Qty</label><span class='select'><select id='cd-product-"+ productId +"' name='quantity'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option></select></span></div></div></div></li>");
+                var productAdded = $("<li class='product'><div class='product-image'><a href='#0'><img style='height:90px;width:90px' src='"+image+"' alt='placeholder'></a></div><div class='product-details'><h3><a href='#0'>"+name+"</a></h3><span class='price'>$"+parseFloat(price)+"</span><div class='actions'><a href='#0' class='delete-item'>Delete</a><div class='quantity'><label for='cd-product-"+ productId +"'>Qty</label><span class='select'><select id='cd-product-"+ productId +"' name='quantity'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option></select></span></div></div></div></li>");
                 cartList.prepend(productAdded);
             }
 

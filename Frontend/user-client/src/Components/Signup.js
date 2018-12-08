@@ -142,7 +142,6 @@ class Signup extends Component {
     }
 
 
-
     render() {
         var image_url = "";
         var companyName = "";
