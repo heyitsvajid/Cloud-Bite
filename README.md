@@ -31,8 +31,8 @@
 
 ### Architecture Diagram
 
-* [Link to Architecture Diagram](https://github.com/nguyensjsu/fa18-281-avengers/raw/master/ArchitectureDiagram_finalVersion.png)
-<img src="https://github.com/nguyensjsu/fa18-281-avengers/raw/master/ArchitectureDiagram_finalVersion.png" width="500" height="700" />
+* [Link to Architecture Diagram](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Final%20Architecture%20Diagram.jpg)
+<img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Final%20Architecture%20Diagram.jpg" width="500" height="700" />
 
 * [Link to Flow Chart](https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Flow_Chart.png)
 <img src="https://github.com/nguyensjsu/fa18-281-avengers/blob/master/Flow_Chart.png" width="500" height="700" />
