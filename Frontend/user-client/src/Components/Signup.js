@@ -27,14 +27,6 @@ class Signup extends Component {
         })
     }
 
-    // componentDidMount() {
-    //     document.addEventListener('keydown', function(event) {
-    //         if(event.keyCode === 13 ) {
-    //             document.getElementById('ctl00_GlobalBody_SignOnControl_SignInButton').click();
-    //         }
-    //     });
-    // }
-
     handleNameChange(e) {
         e.preventDefault();
         this.setState({
@@ -148,7 +140,6 @@ class Signup extends Component {
 
          })
     }
-
 
 
     render() {

@@ -998,8 +998,8 @@ h3.heading_multiple_lines,.h3.heading_multiple_lines{
 }
 @font-face{
   font-family:'NoSpace';
-  src:url("https://www.starbucks.com/fonts/zerowidthspaces.eot");
-  src:url("https://www.starbucks.com/fonts/zerowidthspaces.eot?#iefix") format("embedded-opentype"),url("https://www.starbucks.com/fonts/zerowidthspaces.woff") format("woff"),url("https://www.starbucks.com/fonts/zerowidthspaces.ttf") format("truetype"),url("https://www.starbucks.com/fonts/zerowidthspaces.svg#NoSpace") format("svg");
+  /* src:url("https://www.starbucks.com/fonts/zerowidthspaces.eot");
+  src:url("https://www.starbucks.com/fonts/zerowidthspaces.eot?#iefix") format("embedded-opentype"),url("https://www.starbucks.com/fonts/zerowidthspaces.woff") format("woff"),url("https://www.starbucks.com/fonts/zerowidthspaces.ttf") format("truetype"),url("https://www.starbucks.com/fonts/zerowidthspaces.svg#NoSpace") format("svg"); */
 }
 .container{
   width:100%;
