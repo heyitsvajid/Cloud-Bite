@@ -1,12 +1,15 @@
-# CMPE281 - Team Hackathon Project
+# CMPE281 - Team Hackathon Project : Cloud Bite
 
 ## Team: Avengers
 
-1. Drusti Thakkar
-2. Murtaza Manasawala
-3. Rohan Acharya
-4. Sricheta Ruj
-5. Vajid Kagdi
+## Team Members:
+* [Vajid Kagdi](https://github.com/heyitsvajid)
+* [Murtaza Manasawala](https://github.com/murtazabeans)
+* [Sricheta Ruj](https://github.com/sricheta92)
+* [Rohan Acharya](https://github.com/acharyarohan)
+* [Drusti Thakkar](https://github.com/drashti93)
+
+### [Youtube Link](https://www.youtube.com/watch?v=D_2-Fy3gX98)
 
 ## Architecture Diagram
 
