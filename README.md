@@ -4,7 +4,7 @@
 * [Vajid Kagdi](https://github.com/heyitsvajid)
 * [Murtaza Manasawala](https://github.com/murtazabeans)
 * [Sricheta Ruj](https://github.com/sricheta92)
-* Rohan Acharya
+* [Rohan Acharya](https://github.com/acharyarohan)
 * [Drusti Thakkar](https://github.com/drashti93)
 
 ## Project Journal
